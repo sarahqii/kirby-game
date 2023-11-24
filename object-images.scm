@@ -26,3 +26,12 @@
 ;; Color Palette
 (define lemon-grass-green (color 197 230 54 1))
 (define darker-lemon-grass-green (color 179 223 40 1))
+
+;; Tennis Ball
+
+;;; (create-curve length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Creates a single, thin white curve.
+(define create-curve 
+  (lambda (length)
+    (ellipse (* length 1.4) (* length 0.8) "outline" "white")))
