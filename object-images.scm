@@ -4,7 +4,9 @@
 
 (import image)
 
-;;; OBJECTS DRAWING
+; -------------------
+;;; BASE ROUND BALL |
+; -------------------
 
 ;;; (ball length main-color shadow-color) -> drawing?
 ;;;   length: integer?, non-negative
@@ -16,3 +18,11 @@
     (overlay/offset -3 -6 
                     (circle (* length 0.85) "solid" main-color)
                     (circle length "solid" shadow-color))))
+
+; -------------------------
+;;; OBJECT 1: TENNIS BALL |
+; -------------------------
+
+;; Color Palette
+(define lemon-grass-green (color 197 230 54 1))
+(define darker-lemon-grass-green (color 179 223 40 1))
