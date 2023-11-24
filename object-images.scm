@@ -35,3 +35,12 @@
 (define create-curve 
   (lambda (length)
     (ellipse (* length 1.4) (* length 0.8) "outline" "white")))
+
+;;; (thick-curve length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Creates a single, thick white curve.
+(define thick-curve
+  (lambda (length)
+    (|> (range length (+ (* 0.1 length) length))
+        (section map create-curve _)
+        (section apply overlay _))))
