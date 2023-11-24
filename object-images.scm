@@ -86,3 +86,12 @@
           )
           "solid"                                         ; fill style
           "white")))                                      ; color
+
+;; Complete Mario Ball
+;;; (mario-ball length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws a complete Mario ball for Kirby to eat.
+(define mario-ball
+  (lambda (length)
+    (overlay (letter-m (* length 1.35))
+             (ball length "red" darker-red))))
