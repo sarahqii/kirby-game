@@ -64,3 +64,25 @@
 
 ;; Color Palette
 (define darker-red (color 207 26 27 1))
+
+;; Big M
+;;; (letter-m length) -> drawing?
+;;;   length : integer?, non-negative
+;;; Creates the big letter M in the Mario logo.
+(define letter-m
+  (lambda (length) 
+    (path length                                          ; horizontal image size
+          length                                          ; vertical image size
+          (list (pair 0 (* length 0.75))                  ; 1
+                (pair (* length 0.25) 0)                  ; 2
+                (pair (/ length 2) (* length (/ 3 8)))    ; 3
+                (pair (* length 0.75) 0)                  ; 4
+                (pair length (* length 0.75))             ; 5
+                (pair (* length (/ 7 8)) length)          ; 6
+                (pair (* length 0.75) (* length (/ 3 8))) ; 7
+                (pair (/ length 2) (/ length 2))          ; 8
+                (pair (* length 0.25) (* length (/ 3 8))) ; 9
+                (pair (/ length 8) length)                ; 10
+          )
+          "solid"                                         ; fill style
+          "white")))                                      ; color
