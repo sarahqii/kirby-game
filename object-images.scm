@@ -53,3 +53,7 @@
     (let ([ball (ball length lemon-grass-green darker-lemon-grass-green)] ; Draw the ball
           [curve (thick-curve length)]) ; Draw the white lines across the ball
       (overlay/align "middle" "bottom" curve (overlay/align "middle" "top" curve ball)))))
+
+;; Display to test
+(tennis-ball 40)
+(tennis-ball 100)
