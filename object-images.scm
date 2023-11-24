@@ -57,3 +57,10 @@
 ;; Display to test
 (tennis-ball 40)
 (tennis-ball 100)
+
+; ------------------------
+;;; OBJECT 2: MARIO LOGO |
+; ------------------------
+
+;; Color Palette
+(define darker-red (color 207 26 27 1))
