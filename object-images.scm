@@ -44,3 +44,12 @@
     (|> (range length (+ (* 0.1 length) length))
         (section map create-curve _)
         (section apply overlay _))))
+
+;;; (tennis-ball length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws a complete tennis ball with radius length.
+(define tennis-ball
+  (lambda (length)
+    (let ([ball (ball length lemon-grass-green darker-lemon-grass-green)] ; Draw the ball
+          [curve (thick-curve length)]) ; Draw the white lines across the ball
+      (overlay/align "middle" "bottom" curve (overlay/align "middle" "top" curve ball)))))
