@@ -95,3 +95,7 @@
   (lambda (length)
     (overlay (letter-m (* length 1.35))
              (ball length "red" darker-red))))
+
+;; Display to test
+(mario-ball 40)
+(mario-ball 100)
