@@ -1,8 +1,9 @@
-; object-images.scm
+; images.scm
 
 ;;; This file includes all the static images needed for the game.
 
 (import image)
+(import canvas)
 
 ; -------------------
 ;;; BASE ROUND BALL |
@@ -19,6 +20,16 @@
                     (circle (* length 0.85) "solid" main-color)
                     (circle length "solid" shadow-color))))
 
+; ------------------------
+;;; Object 0: Basic Ball |
+; ------------------------
+
+(define basic-ball
+  (lambda (length) (ball length "pink" (color 248 187 198 1))))
+
+;; Display to test
+(basic-ball 40)
+
 ; -------------------------
 ;;; OBJECT 1: TENNIS BALL |
 ; -------------------------
@@ -27,7 +38,7 @@
 (define lemon-grass-green (color 197 230 54 1))
 (define darker-lemon-grass-green (color 179 223 40 1))
 
-;; Tennis Ball
+;; White Curve
 
 ;;; (create-curve length) -> drawing?
 ;;;   length: integer?, non-negative
@@ -45,6 +56,7 @@
         (section map create-curve _)
         (section apply overlay _))))
 
+;; Complete Tennis Ball
 ;;; (tennis-ball length) -> drawing?
 ;;;   length: integer?, non-negative
 ;;; Draws a complete tennis ball with radius length.
@@ -56,7 +68,6 @@
 
 ;; Display to test
 (tennis-ball 40)
-(tennis-ball 100)
 
 ; ------------------------
 ;;; OBJECT 2: MARIO LOGO |
@@ -98,4 +109,125 @@
 
 ;; Display to test
 (mario-ball 40)
-(mario-ball 100)
+
+; --------------------------
+;;; OBJECT 3: Medical Ball |
+; --------------------------
+
+
+; -----------------------------
+;;; OBJECT 4: Snow Flake Ball |
+; -----------------------------
+
+
+; ------------------------
+;;; Kirby 0: Basic Kirby |
+; ------------------------
+
+;; The pink circle
+(define base-head
+  (overlay/offset -0.5 -0.5 
+                  (circle 100 "solid" "pink")
+                  (circle 100.8 "solid" "palevioletred")))
+
+;; One arm
+(define arm
+  (overlay/offset -0.5 -1 
+                  (ellipse 70 50 "solid" "pink")
+                  (ellipse 71 51 "solid" "palevioletred")))
+
+;; Two arms
+(define arms
+  (beside arm (circle 60 "solid" "transparent") arm))
+
+;; Attach the arms to the head
+(define head
+  (overlay/align "middle" "center" base-head arms))
+
+;; Two pink ellipses for blush
+(define blush
+  (beside (ellipse 30 15 "solid" "hotpink")
+          (rectangle 80 10 "solid" "pink")
+          (ellipse 30 15 "solid" "hotpink")))
+
+;; Basic black eye with white
+(define black-eye-base
+  (overlay/offset -4 -2
+                  (ellipse 17 30 "solid" "white")
+                  (ellipse 25 60 "solid" "black")))
+
+;; Create an anime-like blue shadow for the eye
+(define eye-blue
+  (overlay/offset 0 4
+                  (circle 5 "solid" "black")
+                  (ellipse 14 20 "solid" "mediumblue")))
+
+;; One complete eye
+(define eye
+  (overlay/offset -7 -35 
+                  eye-blue 
+                  black-eye-base))
+
+;; Face with one eye
+(define face-1
+  (overlay/offset -150 -40 eye head))
+
+;; Face with two eyes
+(define face-2
+  (overlay/offset -85 -40 eye face-1))
+
+;; Mouth is a black circle with red ellipse
+(define mouth
+ (overlay/align "middle" "bottom" 
+                (ellipse 30 17 "solid" "red") 
+                (circle 20 "solid" "black")))
+
+;; Attach blush on top of mouth
+(define mouth-and-blush
+     (above blush mouth))
+
+;; THE COMPLETE BASIC KIRBY (WITHOUT FEET)
+(define basic-kirby
+  (overlay/offset -60 -100 mouth-and-blush face-2))
+
+;; Feet are two red ellipses
+;; They are not attached to the complete kirby for future animation
+(define feet
+ (beside (ellipse 70 50 "solid" "red") (circle 15 "solid" "white") (ellipse 70 50 "solid" "red")))
+
+
+; --------------------------------
+;;; Kirby 1: Tennis Player Kirby |
+; --------------------------------
+
+; ------------------------
+;;; Kirby 2: Mario Kirby |
+; ------------------------
+
+; -------------------------
+;;; Kirby 3: Doctor Kirby |
+; -------------------------
+
+; ------------------------
+;;; Kirby 4: Santa Kirby |
+; ------------------------
+
+;; ANIMATION TEST
+
+(define canv (make-canvas 500 500))
+
+;;; (animate-with time) ->
+;;;   time:
+;;; Change 'basic-kirby' to whichever kirby you need to test.
+(animate-with
+  (lambda (time)
+    (begin
+      (draw-rectangle canv 0 0 300 300 "solid" "white")
+      (draw-drawing canv
+                    (if (odd? (round (* 45 time)))
+                        (above basic-kirby feet)
+                        (overlay/align "middle" "bottom" basic-kirby feet))
+                    0
+                    0))))
+
+canv
