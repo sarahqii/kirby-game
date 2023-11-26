@@ -114,6 +114,32 @@
 ;;; OBJECT 3: Medical Ball |
 ; --------------------------
 
+;; Color Palette
+(define bone-white (color 249 246 238 1))
+(define darker-bone-white (color 237 234 222 1))
+
+
+;; Red Cross
+;;; (red-cross length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Creates the red cross for the logo of the medical ball.
+(define red-cross
+  (lambda (length)
+    (overlay
+      (rectangle (* length 0.75) (* length 0.25) "solid" "red")
+      (rectangle (* length 0.25) (* length 0.75) "solid" "red"))))
+
+;; Complete Medical Ball
+;;; (medical-ball length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws a complete medical ball for Kirby to eat.
+(define medical-ball
+  (lambda (length)
+    (overlay (red-cross (* length 1.65))
+             (ball length bone-white darker-bone-white))))
+
+;; Display to test
+(medical-ball 40)
 
 ; -----------------------------
 ;;; OBJECT 4: Snow Flake Ball |
