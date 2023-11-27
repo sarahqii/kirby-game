@@ -16,8 +16,8 @@
 ;;; Draws a round object as a base image to make different objects for Kirby to eat.
 (define ball
   (lambda (length main-color shadow-color)
-    (overlay/offset -3 -6 
-                    (circle (* length 0.85) "solid" main-color)
+    (overlay/offset -3 -3 
+                    (circle (* length 0.87) "solid" main-color)
                     (circle length "solid" shadow-color))))
 
 ; ------------------------
