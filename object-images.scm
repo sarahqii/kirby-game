@@ -28,6 +28,31 @@
 (define darker-pink (color 248 187 198 1))
 (define star-yellow (color 255 230 69 1))
 
+;; Star
+
+;;; (make-star length fill color) -> drawing?
+;;;   length: integer?, non-negative
+;;;   fill: string?
+;;;   color: string?
+;;; Draws an image of a star.
+(define make-star
+  (lambda (length fill color)
+    (path length
+          length
+          (list (pair 0 (* length (/ 3 8))) ; 1
+                (pair (* length (/ 3 8)) (* length (/ 3 8))) ; 2
+                (pair (/ length 2) 0) ; 3
+                (pair (* length (/ 5 8)) (* length (/ 3 8))) ; 4
+                (pair length (* length (/ 3 8))) ; 5
+                (pair (* length 0.75) (* length (/ 5 8))) ; 6
+                (pair (* length (/ 7 8)) length) ; 7
+                (pair (/ length 2) (* length 0.75)) ; 8
+                (pair (* length (/ 1 8)) length) ; 9
+                (pair (* length 0.25) (* length (/ 5 8))) ;10
+          )
+          fill
+          color)))
+          
 (define basic-ball
   (lambda (length) (ball length "pink" (color 248 187 198 1))))
 
