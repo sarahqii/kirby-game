@@ -125,7 +125,7 @@
 ;;;   length : integer?, non-negative
 ;;; Creates the big letter M in the Mario logo.
 (define letter-m
-  (lambda (length) 
+  (lambda (length color) 
     (path length                                          ; horizontal image size
           length                                          ; vertical image size
           (list (pair 0 (* length 0.75))                  ; 1
@@ -140,19 +140,19 @@
                 (pair (/ length 8) length)                ; 10
           )
           "solid"                                         ; fill style
-          "white")))                                      ; color
+          color)))                                        ; color
 
 ;; Complete Mario Ball
 ;;; (mario-ball length) -> drawing?
 ;;;   length: integer?, non-negative
 ;;; Draws a complete Mario ball for Kirby to eat.
 (define mario-ball
-  (lambda (length)
-    (overlay (letter-m (* length 1.35))
-             (ball length "red" darker-red))))
+  (lambda (length color1 color2)
+    (overlay (letter-m (* length 1.35) color1)
+             (ball length color2 darker-red))))
 
 ;; Display to test
-(mario-ball 40)
+(mario-ball 40 "white" "red")
 
 ; --------------------------
 ;;; OBJECT 3: Medical Ball |
