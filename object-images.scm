@@ -303,6 +303,16 @@
     (beside (mushroom-eye length) 
             (square (/ length 6) "solid" "transparent") 
             (mushroom-eye length))))
+
+;;; (mushroom-body length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Puts the eyes on top of the mushroom body.
+(define mushroom-body
+  (lambda (length)
+    (overlay/offset (- (/ length 2.98507463)) (- (/ length 2.85714286)) 
+                    (mushroom-eyes length) 
+                    (mushroom-base length))))
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
