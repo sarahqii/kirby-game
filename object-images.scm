@@ -274,6 +274,9 @@
 ;;; Kirby 2: Mario Kirby |
 ; ------------------------
 
+;; Color Palette
+(define mushroom-base-color (color 255 227 184 1))
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
