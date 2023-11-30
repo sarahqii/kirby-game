@@ -295,7 +295,14 @@
                     (ellipse (* length 0.04) (* length 0.08) "solid" "white")
                     (ellipse (* length 0.07) (* length 0.17) "solid" "black"))))
 
-
+;;; (mushroom-eyes length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Aligns to make two eyes.
+(define mushroom-eyes
+  (lambda (length)
+    (beside (mushroom-eye length) 
+            (square (/ length 6) "solid" "transparent") 
+            (mushroom-eye length))))
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
