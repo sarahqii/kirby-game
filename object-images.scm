@@ -277,6 +277,15 @@
 ;; Color Palette
 (define mushroom-base-color (color 255 227 184 1))
 
+;; MUSHROOM
+
+;;; (mushroom-base length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws a base body for the mushroom.
+(define mushroom-base
+  (lambda (length)
+    (ellipse length (/ length 1.5) "solid" mushroom-base-color)))
+    
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
