@@ -313,6 +313,23 @@
                     (mushroom-eyes length) 
                     (mushroom-base length))))
 
+;;; (mushroom-head length color) -> drawing?
+;;;   length: integer?, non-negative
+;;;   color: string?
+;;; Draws the hat/head part of the mushroom.
+(define mushroom-head
+  (lambda (length color)
+    (let ([white-ellipse (ellipse (/ length 4) (/ length 2.2222) "solid" "white")]
+          [red-head (ellipse (* length 1.3) (* length 1.02) "solid" color)]
+          [white-circle (circle (* length 0.25) "solid" "white")])
+    (overlay/align "right" "center"
+                   white-ellipse
+                   (overlay/align "left" "center"
+                                  white-ellipse
+                                  (overlay white-circle 
+                                           red-head))))))
+
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
