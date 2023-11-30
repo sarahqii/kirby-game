@@ -329,7 +329,19 @@
                                   (overlay white-circle 
                                            red-head))))))
 
+;;; (mushroom length color) -> drawing?
+;;;   length: integer?, non-negative
+;;;   color: string?
+;;; Draws the complete image of the mushroom.
+(define mushroom
+  (lambda (length color)
+    (overlay/offset (/ length 6.667) (/ length 1.58730159) 
+                    (mushroom-head length color) 
+                    (mushroom-body length))))
 
+;; Display to test
+(mushroom 150 "green")
+(mushroom 100 "red")
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
