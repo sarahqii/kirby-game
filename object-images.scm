@@ -266,7 +266,6 @@
 (define feet
  (beside (ellipse 70 50 "solid" "red") (circle 15 "solid" "white") (ellipse 70 50 "solid" "red")))
 
-
 ; --------------------------------
 ;;; Kirby 1: Tennis Player Kirby |
 ; --------------------------------
