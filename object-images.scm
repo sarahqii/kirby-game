@@ -24,6 +24,10 @@
 ;;; Object 0: Basic Ball |
 ; ------------------------
 
+;; Color Palette
+(define darker-pink (color 248 187 198 1))
+(define star-yellow (color 255 230 69 1))
+
 (define basic-ball
   (lambda (length) (ball length "pink" (color 248 187 198 1))))
 
