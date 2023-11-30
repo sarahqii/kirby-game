@@ -52,7 +52,15 @@
           )
           fill
           color)))
-          
+
+;;; (star length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws an image of a star with outline
+(define star
+  (lambda (length)
+    (overlay (make-star (+ length 0.8) "outline" "white")
+             (make-star length "solid" star-yellow))))
+             
 (define basic-ball
   (lambda (length) (ball length "pink" (color 248 187 198 1))))
 
