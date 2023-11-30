@@ -285,7 +285,17 @@
 (define mushroom-base
   (lambda (length)
     (ellipse length (/ length 1.5) "solid" mushroom-base-color)))
-    
+
+;;; (mushroom-eye length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws one eye for the mushroom body.
+(define mushroom-eye
+  (lambda (length)
+    (overlay/offset (- (/ length 66.667)) (- (/ length 66.667))
+                    (ellipse (* length 0.04) (* length 0.08) "solid" "white")
+                    (ellipse (* length 0.07) (* length 0.17) "solid" "black"))))
+
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
