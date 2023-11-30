@@ -162,7 +162,6 @@
 (define bone-white (color 249 246 238 1))
 (define darker-bone-white (color 237 234 222 1))
 
-
 ;; Red Cross
 ;;; (red-cross length) -> drawing?
 ;;;   length: integer?, non-negative
