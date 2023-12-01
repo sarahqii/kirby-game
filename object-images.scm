@@ -342,6 +342,25 @@
 ;; Display to test
 (mushroom 150 "green")
 (mushroom 100 "red")
+
+;; MARIO HAT
+
+;;; (house length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws an image of the part of the hat that looks like a house.
+(define house
+  (lambda (length)
+    (path length
+          length
+          (list (pair (/ length 2) 0) ; 1
+                (pair (* length (/ 7 8)) (* length 0.25)) ; 2
+                (pair (* length (/ 7 8)) (/ length 2)) ; 3
+                (pair (/ length 8) (/ length 2)) ; 4
+                (pair (/ length 8) (* length 0.25)) ;5
+          )
+          "solid"
+          "red")))
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
