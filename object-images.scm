@@ -361,6 +361,22 @@
           "solid"
           "red")))
 
+;;; (pre-cap length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws an image of the part of the hat that is cap.
+(define pre-cap
+  (lambda (length)
+    (path length
+          length
+          (list (pair 0 (* length (/ 5 8))) ; 1
+                (pair (/ length 8) (/ length 2)) ; 2
+                (pair (* length (/ 7 8)) (/ length 2)) ; 3
+                (pair length (* length (/ 5 8)))
+          )
+          "solid"
+          darker-red)))
+
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
