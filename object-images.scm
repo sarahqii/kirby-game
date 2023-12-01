@@ -681,7 +681,6 @@ canv
 ;;; (mustache size) -> drawing?
 ;;;   size : integer? (non-negative)
 ;;; Returns a white mustache 
-
 (define mustache
   (lambda (size)
                 (path (* 19 size)
@@ -714,7 +713,6 @@ canv
 ;;; (mustache-with-nose size) -> drawing?
 ;;;  size : integer? (non-negative)
 ;;; Returns a combined nose and white mustache 
-
 (define mustache-with-nose
   (lambda (size)
      (overlay/offset (* -0.9 size) (* 0.1 size) (nose size) (mustache size))
@@ -723,7 +721,6 @@ canv
 ;;; (mustache-with-nose size) -> drawing?
 ;;;  size : integer? (non-negative)
 ;;; Returns a combined nose, white mustache, and dark red nose.
-
 (define mustache-with-nose-and-blush
   (lambda (size)
      (overlay/offset (* 0.4 size) (* 0 size) (mustache-with-nose size) (blush size))
@@ -732,7 +729,6 @@ canv
 ;;; (santa-face size) -> drawing?
 ;;;  size : integer? (non-negative)
 ;;; Returns a santa kirby face.
-
 (define santa-face
   (lambda (size)
     (overlay/offset (- (* 0.18 size)) (- (* 1 size)) (mustache-with-nose-and-blush size) (face-2 size))))
@@ -740,7 +736,6 @@ canv
 ;;; (basic-santa-kirby size) -> drawing?
 ;;;   size : integer? (non-negative)
 ;;; Returns a basic santa kirby with just head, arm, mustache with blush and nose, and feet.
-
 (define basic-santa-kirby
   (lambda (size)
     (overlay/offset (* 0.47 size) (* 1.5 size) (face size) (feet size))))
@@ -748,7 +743,6 @@ canv
 ;;; (santa-hat-base size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;; Returns a base santa hat.
-
 (define santa-hat-base
   (lambda (size)
   (overlay/offset (* 0.16 size) (* -1.1 size) 
@@ -758,11 +752,9 @@ canv
               (triangle (* 1.7 size) "solid" "maroon"))
   )))
 
-
 ;;; (santa-hat size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;; Returns a final santa hat with the white ball on top of santa-hat-base.
-
 (define santa-hat
   (lambda (size)
     (overlay/offset (* -0.78 size) (* 0.23 size) (overlay (circle (* 0.2 size) "solid" "white")
@@ -770,7 +762,6 @@ canv
     (santa-hat-base size))
     )
   )
-
 
 ;;; (circle-1 size) -> drawing?
 ;;; size : integer? (non-negative)
@@ -810,7 +801,6 @@ canv
 ;;; (circle-6 size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;;; Returns the innermost violet circle.
-
 (define circle-6 
   (lambda (size)
     (circle (* 0.05 size) "solid" "violet")))
@@ -835,7 +825,6 @@ canv
 ;;; (lollipop size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;;; Returns a final drawing of lollipop.
-
 (define lollipop
    (lambda (size)
      (above (candy size) (stick size))
@@ -856,7 +845,6 @@ canv
 ;;; (final-santa-kirby size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;;; Returns a final Santa kirby drawing.
-
 (define final-santa-kirby
   (lambda (size)
      (overlay/offset (* -0.97 size) (* 1.1 size) (santa-hat size) (santa-kirby-with-lollipop size))
@@ -865,7 +853,6 @@ canv
 ;;; (final-santa-kirby-with-background size) -> drawing?
 ;;; size : integer? (non-negative)
 ;;;; Returns a final santa kirby in a black background so that we can see his mustache.
-
 (define fina-santa-kirby-with-background
   (lambda (size)
   (overlay/offset (* -1 size) (* -1.8 size) (final-santa-kirby size) 
@@ -875,7 +862,22 @@ canv
 (fina-santa-kirby-with-background 100)
 
 canv
-        
+
+; ---------------------
+;;; Background canvas |
+; ---------------------
+
+
+; ---------------------
+;;; Ball Click Effect |
+; ---------------------
+
+
+; ----------------
+;;; Sound Effect |
+; ----------------
+
+
 ; -----------
 ;;; The BGM |
 ; -----------
