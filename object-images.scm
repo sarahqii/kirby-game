@@ -401,6 +401,41 @@
     (let* ([dot (circle (* length 0.1) "solid" mustache-brown)]
            [align (lambda (img) (overlay/offset (/ length 8) 0 dot img))])
       (apply beside (map align (make-list 2 (align dot)))))))
+
+;; COMPLETE MARIO KIRBY
+
+;;; (mario-wears-hat size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws image of mario kirby with hat on.
+(define mario-wears-hat
+  (lambda (size)
+    (overlay/offset (- (/ size 4)) (/ size 1.08695652) 
+                    (mario-hat (* size 2)) 
+                    (final-kirby size))))
+
+;;; (mario-with-mustache size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws image of mario kirby with hat and mustache.
+(define mario-with-mustache
+  (lambda (size)
+    (overlay/offset (- (/ size 1.58730159)) (- (* size 2))
+                    (mustache (* size 1.5)) 
+                    (mario-wears-hat size))))
+
+;;; (mario-kirby size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the complete image of Mario Kirby.
+(define mario-kirby
+  (lambda (size)
+    (overlay/offset (- (* size 3.1)) (- (/ size 1.66667))
+                    (mushroom size "red")
+                    (overlay/offset (/ size 1.11111111) (- (* size 1.8))
+                                    (mushroom (/ size 1.11111111) "green")
+                                    (mario-with-mustache size)))))
+
+;; Display to test
+(mario-kirby 100)
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
