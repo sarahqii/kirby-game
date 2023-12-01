@@ -4,6 +4,7 @@
 
 (import image)
 (import canvas)
+(import music)
 
 ; -------------------
 ;;; BASE ROUND BALL |
@@ -187,10 +188,27 @@
 (medical-ball 40)
 
 ; -----------------------------
-;;; OBJECT 4: Snow Flake Ball |
+;;; OBJECT 4: Christmas Ball   |
 ; -----------------------------
 
+(define tree
+  (overlay/offset -5 11 (triangle 23 "solid" "seagreen")
+          (overlay/offset -2 10 (triangle 28 "solid" "seagreen")
+                                (triangle 33 "solid" "seagreen"))))
 
+;;; Tree-body
+;;; Addes the start and tree trunk to the leaf part
+(define tree-body
+    (above (circle 4 "solid" "gold") tree (rectangle 4 12 "solid" "brown")))
+
+;;; Christmas-ball
+;;; Creates a final Christmas ball for Kirby to eat. 
+(define Christmas-ball
+  (overlay tree-body (overlay/offset 1 0.5 (circle 38 "solid" "darkslateblue") (circle 39 "solid" "gray"))
+  ))
+
+Christmas-ball
+        
 ; ------------------------
 ;;; Kirby 0: Basic Kirby |
 ; ------------------------
