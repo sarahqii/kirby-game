@@ -4,6 +4,7 @@
 
 (import image)
 (import canvas)
+(import music)
 
 ; -------------------
 ;;; BASE ROUND BALL |
