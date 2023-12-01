@@ -310,6 +310,97 @@
 ;;; Kirby 1: Tennis Player Kirby |
 ; --------------------------------
 
+;;; (racket-frame size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the frame of the racket. 
+(define racket-frame
+  (lambda (size)
+    (overlay
+      (ellipse (* 0.8 size) size "solid" "white")
+      (ellipse (* 0.86 size) (* 1.06 size) "solid" "blue"))))
+
+;;; (racket-string size) -> image?
+;;;   size : number?, non-negative
+;;; Draws one string of the racket, length = size.
+(define racket-string
+  (lambda (size)
+    (rectangle (* 0.02 size) size "solid" "black")))
+
+;;; (racket-frame-with-strings size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the frame of the racket with strings.
+(define racket-frame-with-strings
+  (lambda (size)
+    (overlay
+      (racket-string size)
+      (racket-frame size))))
+
+;;; (racket-connect size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the connecting part of the racket. 
+(define racket-connect
+  (lambda (size)
+    (rotate 180 
+      (overlay
+        (triangle (* 0.59 size) "solid" "white")
+        (triangle (* 0.73 size) "solid" "black")))))
+
+;;; (racket-connected size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the connecting part of the racket combined with the racket frame. 
+(define racket-connected
+  (lambda (size)
+    (overlay/offset (* 0.065 size) (* 0.8 size) (racket-frame-with-strings size) (racket-connect size))))
+
+;;; (racket-handle size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the handle of the racket. 
+(define racket-handle
+  (lambda (size)
+    (rectangle (* 0.2 size) (* 0.6 size) "solid" "black")))
+
+;;; (racket size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the full racket. 
+(define racket
+  (lambda (size)
+    (overlay/offset (- (* 0.33 size)) (- (* 1.24 size)) (racket-handle size) (racket-connected size))))
+
+;;; (kirby-with-racket size) -> image?
+;;;   size : number?, non-negative
+;;; Draws kirby with the tennis racket.
+(define kirby-with-racket
+  (lambda (size)
+    (overlay/offset (- (* 0.28 size)) (- (* 0.55 size)) (final-kirby size) (racket size))))
+
+;;; (tennis-kirby-ball-down size) -> image?
+;;;   size : number?, non-negative
+;;; Draws tennis kirby with the ball on the ground. 
+(define tennis-kirby-ball-down
+  (lambda (size)
+    (overlay/offset (* 2.6 size) (* 2.2 size) (kirby-with-racket size) (tennis-ball (* 0.18 size)))))
+
+;;; (tennis-kirby-ball-down size) -> image?
+;;;   size : number?, non-negative
+;;; Draws tennis kirby with the ball in his hand.
+(define tennis-kirby-ball-up
+  (lambda (size)
+    (overlay/offset (* 2.6 size) (* 1.6 size) (kirby-with-racket size) (tennis-ball (* 0.18 size)))))
+
+;;; An animation of tennis kirby bouncing the ball up and down.
+(ignore
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-rectangle canv 0 0 2000 2000 "solid" "white")
+        (draw-drawing canv
+                      (if (odd? (round (* 60 time)))
+                          (tennis-kirby-ball-down 100)
+                          (tennis-kirby-ball-up 100))
+                      0
+                      0)))))
+canv
+        
 ; ------------------------
 ;;; Kirby 2: Mario Kirby |
 ; ------------------------
@@ -503,3 +594,116 @@
                     0))))
 
 canv
+
+; -----------
+;;; The BGM |
+; -----------
+
+;;; The main part of the bgm.
+(define main-bgm
+  (seq (note 72 qn)
+       (rest qn)
+       (note 67 qn)
+       (rest qn)
+       (note 63 qn)
+       (note 62 qn)
+       (note 60 qn)
+       (rest qn)
+       (note 60 qn)
+       (note 62 qn)
+       (note 63 qn)
+       (note 60 qn)
+       (note 58 qn)
+       (note 60 qn)
+       (note 55 qn)
+       (rest qn)
+       (note 72 qn)
+       (rest qn)
+       (note 67 qn)
+       (rest qn)
+       (note 63 qn)
+       (note 62 qn)
+       (note 60 qn)
+       (note 60 en)
+       (note 62 en)
+       (note 63 qn)
+       (note 65 qn)
+       (note 62 qn)
+       (note 58 qn)
+       (note 60 qn)
+       (note 55 qn)
+       (note 60 qn)
+       (rest qn)))
+
+;;; One part of the underlying bgm.
+(define underlying-bgm-1
+  (seq (note 57 en)
+       (par (note 72 en)
+            (note 69 en)
+            (note 63 en))
+       (note 52 en)
+       (par (note 72 en)
+            (note 69 en)
+            (note 63 en))
+       (note 57 en)
+       (par (note 72 en)
+            (note 69 en)
+            (note 63 en))
+       (note 52 en)
+       (par (note 72 en)
+            (note 69 en)
+            (note 63 en))))
+
+;;; Another part of the underlying bgm.
+(define underlying-bgm-2
+  (seq (note 62 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 65 en))
+       (note 57 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 66 en))
+       (note 62 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 66 en))
+       (note 57 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 66 en))))
+
+;;; Another part of the underlying bgm.
+(define underlying-bgm-3
+  (seq (note 52 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 65 en))
+       (note 59 en)
+       (par (note 74 en)
+            (note 69 en)
+            (note 66 en))
+       (note 63 en)
+       (par (note 71 en)
+            (note 67 en)
+            (note 63 en))
+       (note 56 en)
+       (par (note 71 en)
+            (note 67 en)
+            (note 63 en))))
+
+;;; The full underlying bgm.
+(define underlying-bgm
+  (seq (repeat 2 underlying-bgm-1)
+       underlying-bgm-2
+       (repeat 3 underlying-bgm-1)
+       underlying-bgm-3
+       underlying-bgm-1))
+
+;;; The full bgm, the main and underlying bgm combined, repeated twice.
+(repeat 2
+  (mod (tempo qn 180) 
+     (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
+          (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
+; 61 is best, but doesn't work for certain sounds
+; 60, 57, 58
