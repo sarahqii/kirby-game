@@ -361,6 +361,8 @@ Christmas-ball
 
 ;; ANIMATION TEST
 
+(define canv (make-canvas 400 400))
+
 ;; (animate-with time) -> animation?
 ;;   time: number?, a non-negative number
 ;; Animation for basic-kirby.
@@ -422,7 +424,9 @@ canv
 ;;; Draws the connecting part of the racket combined with the racket frame. 
 (define racket-connected
   (lambda (size)
-    (overlay/offset (* 0.065 size) (* 0.8 size) (racket-frame-with-strings size) (racket-connect size))))
+    (overlay/offset (* 0.065 size) (* 0.8 size) 
+                    (racket-frame-with-strings size) 
+                    (racket-connect size))))
 
 ;;; (racket-handle size) -> image?
 ;;;   size : number?, non-negative
@@ -436,28 +440,36 @@ canv
 ;;; Draws the full racket. 
 (define racket
   (lambda (size)
-    (overlay/offset (- (* 0.33 size)) (- (* 1.24 size)) (racket-handle size) (racket-connected size))))
+    (overlay/offset (- (* 0.33 size)) (- (* 1.24 size)) 
+                    (racket-handle size) 
+                    (racket-connected size))))
 
 ;;; (kirby-with-racket size) -> image?
 ;;;   size : number?, non-negative
 ;;; Draws kirby with the tennis racket.
 (define kirby-with-racket
   (lambda (size)
-    (overlay/offset (- (* 0.28 size)) (- (* 0.55 size)) (final-kirby size) (racket size))))
+    (overlay/offset (- (* 0.28 size)) (- (* 0.55 size)) 
+                    (basic-kirby size) 
+                    (racket size))))
 
 ;;; (tennis-kirby-ball-down size) -> image?
 ;;;   size : number?, non-negative
 ;;; Draws tennis kirby with the ball on the ground. 
 (define tennis-kirby-ball-down
   (lambda (size)
-    (overlay/offset (* 2.6 size) (* 2.2 size) (kirby-with-racket size) (tennis-ball (* 0.18 size)))))
+    (overlay/offset (* 2.6 size) (* 2.2 size) 
+                    (kirby-with-racket size) 
+                    (tennis-ball (* 0.18 size)))))
 
 ;;; (tennis-kirby-ball-down size) -> image?
 ;;;   size : number?, non-negative
 ;;; Draws tennis kirby with the ball in his hand.
 (define tennis-kirby-ball-up
   (lambda (size)
-    (overlay/offset (* 2.6 size) (* 1.6 size) (kirby-with-racket size) (tennis-ball (* 0.18 size)))))
+    (overlay/offset (* 2.6 size) (* 1.6 size) 
+                    (kirby-with-racket size) 
+                    (tennis-ball (* 0.18 size)))))
 
 ;;; An animation of tennis kirby bouncing the ball up and down.
 (ignore
@@ -614,7 +626,7 @@ canv
   (lambda (size)
     (overlay/offset (- (/ size 4)) (/ size 1.08695652) 
                     (mario-hat (* size 2)) 
-                    (final-kirby size))))
+                    (basic-kirby size))))
 
 ;;; (mario-with-mustache size) -> drawing?
 ;;;   size: integer?, non-negative
