@@ -384,6 +384,16 @@
     (overlay/offset 0 (- (/ length 1.66667)) 
                     (ellipse length (/ length 20) "solid" darker-red)
                     (pre-cap length))))
+
+;;; (mario-hat length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws the who
+(define mario-hat
+  (lambda (length)
+    (overlay/offset (- (/ length 2.73972603)) (- (/ length 5.71428571)) 
+                    (mario-ball 27 "red" "white") 
+                    (overlay (house length) (cap length)))))
+
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
