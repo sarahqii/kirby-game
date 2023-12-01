@@ -187,7 +187,7 @@
 (medical-ball 40)
 
 ; -----------------------------
-;;; OBJECT 4: Snow Flake Ball |
+;;; OBJECT 4: Christmas Ball   |
 ; -----------------------------
 
 (define tree
