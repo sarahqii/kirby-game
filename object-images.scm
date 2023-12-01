@@ -240,6 +240,7 @@
             (rectangle (* 0.8 size) (* 0.1 size) "solid" "pink")
             (ellipse (* 0.3 size) (* 0.15 size) "solid" "hotpink"))))
 
+;;; (balck-eye-base size) -> drawing?
 (define black-eye-base
   (lambda (size)
     (overlay/offset
