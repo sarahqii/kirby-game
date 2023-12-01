@@ -340,10 +340,6 @@
                     (mushroom-head length color) 
                     (mushroom-body length))))
 
-;; Display to test
-(mushroom 150 "green")
-(mushroom 100 "red")
-
 ;; MARIO HAT
 
 ;;; (house length) -> drawing?
@@ -395,6 +391,16 @@
                     (mario-ball 27 "red" "white") 
                     (overlay (house length) (cap length)))))
 
+;; MUSTACHE
+
+;;; (mustache length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws mustache.
+(define mustache
+  (lambda (length)
+    (let* ([dot (circle (* length 0.1) "solid" mustache-brown)]
+           [align (lambda (img) (overlay/offset (/ length 8) 0 dot img))])
+      (apply beside (map align (make-list 2 (align dot)))))))
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
