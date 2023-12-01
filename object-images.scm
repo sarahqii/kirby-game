@@ -276,6 +276,7 @@
 
 ;; Color Palette
 (define mushroom-base-color (color 255 227 184 1))
+(define mustache-brown (color 65 38 37 1))
 
 ;; MUSHROOM
 
