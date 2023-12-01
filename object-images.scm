@@ -278,40 +278,61 @@ Christmas-ball
       (circle (* 0.05 size) "solid" "black")
       (ellipse (* 0.14 size) (* 0.2 size) "solid" "mediumblue"))))
 
+;;; (eye size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws one eye.
 (define eye
   (lambda (size)
     (overlay/offset (- (* 0.07 size)) (- (* 0.35 size)) 
                     (eye-blue size) 
                     (black-eye-base size))))
 
+;;; (face-1 size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws a face with one eye.
 (define face-1
   (lambda (size)
     (overlay/offset (- (* 1.5 size)) (- (* 0.4 size)) 
                     (eye size) 
                     (head size))))
 
+;;; (mouth size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws a mouth.
 (define mouth
   (lambda (size)
     (overlay/align "middle" "bottom" 
                    (ellipse (* 0.3 size) (* 0.17 size) "solid" "red") 
                    (circle (* 0.2 size) "solid" "black"))))
 
+;;; (mouth-and-blush size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Align the mouth and blush.
 (define mouth-and-blush
   (lambda (size)
     (above (blush size) (mouth size))))
 
+;;; (face-2 size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the face with two eyes.
 (define face-2
   (lambda (size)
     (overlay/offset (- (* 0.85 size)) (- (* 0.4 size)) 
                     (eye size) 
                     (face-1 size))))
 
+;;; (face size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the complete face.
 (define face
   (lambda (size)
     (overlay/offset (- (* 0.6 size)) (- size) 
                     (mouth-and-blush size) 
                     (face-2 size))))
 
+;;; (feet size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the feet.
 (define feet
   (lambda (size)
     (beside 
@@ -319,12 +340,18 @@ Christmas-ball
       (circle (* 0.15 size) "solid" "white") 
       (ellipse (* 0.7 size) (* 0.5 size) "solid" "red"))))
 
+;;; (basic-kirby size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the complete basic kirby.
 (define basic-kirby
   (lambda (size)
     (overlay/align "middle" "bottom" 
                    (face size) 
                    (feet size))))
 
+;;; (basic-kirby-offset size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the basic kirby but offset feet for animation.
 (define basic-kirby-offset
   (lambda (size)
     (overlay/offset (* 0.46 size)
