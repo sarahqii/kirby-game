@@ -376,7 +376,14 @@
           "solid"
           darker-red)))
 
-
+;;; (cap length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Finishes the look for the cap
+(define cap
+  (lambda (length)
+    (overlay/offset 0 (- (/ length 1.66667)) 
+                    (ellipse length (/ length 20) "solid" darker-red)
+                    (pre-cap length))))
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
