@@ -195,76 +195,116 @@
 ;;; Kirby 0: Basic Kirby |
 ; ------------------------
 
-;; The pink circle
+;;; (base-head size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the image of the base head for basic kirby.
 (define base-head
-  (overlay/offset -0.5 -0.5 
-                  (circle 100 "solid" "pink")
-                  (circle 100.8 "solid" "palevioletred")))
+  (lambda (size)
+    (overlay/offset 
+      (- (* 0.0005 size)) 
+      (- (* 0.0005 size)) 
+      (circle size "solid" "pink")
+      (circle (* 1.008 size) "solid" "palevioletred"))))
 
-;; One arm
+;;; (arm size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws one arm.
 (define arm
-  (overlay/offset -0.5 -1 
-                  (ellipse 70 50 "solid" "pink")
-                  (ellipse 71 51 "solid" "palevioletred")))
+  (lambda (size)
+    (overlay/offset 
+      (- (* 0.0005 size)) 
+      (- (* 0.0005 size)) 
+      (ellipse (* 0.7 size) (* 0.5 size) "solid" "pink")
+      (ellipse (* 0.71 size) (* 0.51 size) "solid" "palevioletred"))))
 
-;; Two arms
+;;; (arms size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws two arms.
 (define arms
-  (beside arm (circle 60 "solid" "transparent") arm))
+  (lambda (size)
+    (beside (arm size) (circle (* 0.6 size) "solid" "white") (arm size))))
 
-;; Attach the arms to the head
+;;; (head size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the body (head with arms) of kirby.
 (define head
-  (overlay/align "middle" "center" base-head arms))
+  (lambda (size)
+    (overlay/align "middle" "center" (base-head size) (arms size))))
 
-;; Two pink ellipses for blush
+;;; (blush size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws blush
 (define blush
-  (beside (ellipse 30 15 "solid" "hotpink")
-          (rectangle 80 10 "solid" "pink")
-          (ellipse 30 15 "solid" "hotpink")))
+  (lambda (size)
+    (beside (ellipse (* 0.3 size) (* 0.15 size) "solid" "hotpink")
+            (rectangle (* 0.8 size) (* 0.1 size) "solid" "pink")
+            (ellipse (* 0.3 size) (* 0.15 size) "solid" "hotpink"))))
 
-;; Basic black eye with white
 (define black-eye-base
-  (overlay/offset -4 -2
-                  (ellipse 17 30 "solid" "white")
-                  (ellipse 25 60 "solid" "black")))
+  (lambda (size)
+    (overlay/offset
+      (- (* 0.04 size))
+      (- (* 0.02 size))
+      (ellipse (* 0.17 size) (* 0.3 size) "solid" "white")
+      (ellipse (* 0.25 size) (* 0.6 size) "solid" "black"))))
 
-;; Create an anime-like blue shadow for the eye
+;;; (eye-blue size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws blue part of eye.
 (define eye-blue
-  (overlay/offset 0 4
-                  (circle 5 "solid" "black")
-                  (ellipse 14 20 "solid" "mediumblue")))
+  (lambda (size)
+    (overlay/offset
+      0
+      (* 0.04 size)
+      (circle (* 0.05 size) "solid" "black")
+      (ellipse (* 0.14 size) (* 0.2 size) "solid" "mediumblue"))))
 
-;; One complete eye
 (define eye
-  (overlay/offset -7 -35 
-                  eye-blue 
-                  black-eye-base))
+  (lambda (size)
+    (overlay/offset (- (* 0.07 size)) (- (* 0.35 size)) 
+                    (eye-blue size) 
+                    (black-eye-base size))))
 
-;; Face with one eye
 (define face-1
-  (overlay/offset -150 -40 eye head))
+  (lambda (size)
+    (overlay/offset (- (* 1.5 size)) (- (* 0.4 size)) 
+                    (eye size) 
+                    (head size))))
 
-;; Face with two eyes
-(define face-2
-  (overlay/offset -85 -40 eye face-1))
-
-;; Mouth is a black circle with red ellipse
 (define mouth
- (overlay/align "middle" "bottom" 
-                (ellipse 30 17 "solid" "red") 
-                (circle 20 "solid" "black")))
+  (lambda (size)
+    (overlay/align "middle" "bottom" 
+                   (ellipse (* 0.3 size) (* 0.17 size) "solid" "red") 
+                   (circle (* 0.2 size) "solid" "black"))))
 
-;; Attach blush on top of mouth
 (define mouth-and-blush
-     (above blush mouth))
+  (lambda (size)
+    (above (blush size) (mouth size))))
 
-;; THE COMPLETE BASIC KIRBY (WITHOUT FEET)
-(define basic-kirby
-  (overlay/offset -60 -100 mouth-and-blush face-2))
+(define face-2
+  (lambda (size)
+    (overlay/offset (- (* 0.85 size)) (- (* 0.4 size)) 
+                    (eye size) 
+                    (face-1 size))))
 
-;; Feet are two red ellipses
-;; They are not attached to the complete kirby for future animation
+(define face
+  (lambda (size)
+    (overlay/offset (- (* 0.6 size)) (- size) 
+                    (mouth-and-blush size) 
+                    (face-2 size))))
+
 (define feet
- (beside (ellipse 70 50 "solid" "red") (circle 15 "solid" "white") (ellipse 70 50 "solid" "red")))
+  (lambda (size)
+    (beside 
+      (ellipse (* 0.7 size) (* 0.5 size) "solid" "red") 
+      (circle (* 0.15 size) "solid" "white") 
+      (ellipse (* 0.7 size) (* 0.5 size) "solid" "red"))))
+
+(define final-kirby
+  (lambda (size)
+    (overlay/align "middle" "bottom" 
+                   (face size) 
+                   (feet size))))
 
 ; --------------------------------
 ;;; Kirby 1: Tennis Player Kirby |
