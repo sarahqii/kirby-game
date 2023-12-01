@@ -438,12 +438,30 @@ canv
   (lambda (size)
     (overlay/offset (- (* 0.33 size)) (- (* 1.24 size)) (racket-handle size) (racket-connected size))))
 
+;;; (headband size) -> image?
+;;;   size : number?, non-negative
+;;; Draws a headband with a stripe.
+(define headband
+  (lambda (size)
+    (overlay (rectangle (* 1.6 size) (* 0.08 size) "solid" "white")
+             (rectangle (* 1.6 size) (* 0.2 size) "solid" "black"))))
+
+;;; (kirby-with-headband size) -> image?
+;;;   size : number?, non-negative
+;;; Draws kirby with the headband.
+(define kirby-with-headband
+  (lambda (size)
+    (overlay/offset (- (* 0.5 size))
+                    (- (* 0.2 size))
+                    (headband size)
+                    (basic-kirby size))))
+
 ;;; (kirby-with-racket size) -> image?
 ;;;   size : number?, non-negative
 ;;; Draws kirby with the tennis racket.
 (define kirby-with-racket
   (lambda (size)
-    (overlay/offset (- (* 0.28 size)) (- (* 0.55 size)) (final-kirby size) (racket size))))
+    (overlay/offset (- (* 0.28 size)) (- (* 0.55 size)) (kirby-with-headband size) (racket size))))
 
 ;;; (tennis-kirby-ball-down size) -> image?
 ;;;   size : number?, non-negative
