@@ -318,11 +318,37 @@ Christmas-ball
       (circle (* 0.15 size) "solid" "white") 
       (ellipse (* 0.7 size) (* 0.5 size) "solid" "red"))))
 
-(define final-kirby
+(define basic-kirby
   (lambda (size)
     (overlay/align "middle" "bottom" 
                    (face size) 
                    (feet size))))
+
+(define basic-kirby-offset
+  (lambda (size)
+    (overlay/offset (* 0.46 size)
+                    (* 1.6 size)
+                    (face size) 
+                    (feet size))))
+
+;; ANIMATION TEST
+
+;; (animate-with time) -> animation?
+;;   time: number?, a non-negative number
+;; Animation for basic-kirby.
+(ignore
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-rectangle canv 0 0 300 300 "solid" "white")
+        (draw-drawing canv
+                      (if (odd? (round (* 60 time)))
+                          (basic-kirby 100)
+                          (basic-kirby-offset 100))
+                      0
+                      0)))))
+
+canv
 
 ; --------------------------------
 ;;; Kirby 1: Tennis Player Kirby |
@@ -592,26 +618,6 @@ canv
 ; ------------------------
 ;;; Kirby 4: Santa Kirby |
 ; ------------------------
-
-;; ANIMATION TEST
-
-(define canv (make-canvas 500 500))
-
-;;; (animate-with time) ->
-;;;   time:
-;;; Change 'basic-kirby' to whichever kirby you need to test.
-(animate-with
-  (lambda (time)
-    (begin
-      (draw-rectangle canv 0 0 300 300 "solid" "white")
-      (draw-drawing canv
-                    (if (odd? (round (* 45 time)))
-                        (above basic-kirby feet)
-                        (overlay/align "middle" "bottom" basic-kirby feet))
-                    0
-                    0))))
-
-canv
 
 ; -----------
 ;;; The BGM |
