@@ -865,6 +865,29 @@ canv
 ;;; Background canvas |
 ; ---------------------
 
+;; Color Palette
+(define bg-yellow (color 253 211 36 1))
+; star-yellow
+
+(define background (rectangle 1000 600 "solid" bg-yellow))
+(define dots
+  (let* ([dot (overlay (circle 5 "solid" star-yellow) 
+                       (square 20 "solid" "transparent"))]
+         [1-row (apply beside (make-list 10 dot))])
+    (apply above (make-list 5 1-row))))
+
+(define star-0 (star 40 star-yellow star-yellow))
+(define star-1 (star 60 star-yellow star-yellow))
+(define star-2 (star 80 star-yellow star-yellow))
+(define star-3 (star 100 star-yellow star-yellow))
+(define star-4 (star 150 star-yellow star-yellow))
+
+dots
+star-0
+star-1
+star-2
+star-3
+star-4
 
 ; ---------------------
 ;;; Ball Click Effect |
