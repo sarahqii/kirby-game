@@ -869,20 +869,27 @@ canv
 (define bg-yellow (color 255 240 0 1))
 (define bg-star (color 255 252 0 1))
 
+;; Background: 1000 x 600 
 (define background (rectangle 1000 600 "solid" bg-yellow))
 
+;; Decoration items
+
+;;; Make 5 rows of 10 dots
 (define dots
   (let* ([dot (overlay (circle 5 "solid" bg-star) 
                        (square 20 "solid" "transparent"))]
          [1-row (apply beside (make-list 10 dot))])
     (apply above (make-list 5 1-row))))
 
+;;; Basic stars
 (define star-0 (star 40 bg-star bg-star))
 (define star-1 (star 60 bg-star bg-star))
 (define star-2 (star 80 bg-star bg-star))
 (define star-3 (star 100 bg-star bg-star))
 (define star-4 (star 150 bg-star bg-star))
 (define star-5 (star 200 bg-star bg-star))
+
+;;; Blocks of decoration
 (define block-0 (square 10 "solid" "transparent"))
 (define block-1 (overlay/offset -5 0 (rotate 40 star-0) (square 70 "solid" "transparent")))
 (define block-2 (overlay/offset -8 -8 (rotate 10 star-0) (square 70 "solid" "transparent")))
@@ -897,21 +904,24 @@ canv
 (define block-11 (overlay/offset 9 20 (rotate -20 star-5) (square 240 "solid" "transparent")))
 (define block-12 (rotate 10 (overlay dots (rectangle 200 100 "solid" "transparent"))))
 (define block-13 (rotate -40 (overlay dots (rectangle 200 100 "solid" "transparent"))))
+
+;;; Rows of decoration
 (define row-1 (beside block-13 block-3 block-0 block-4 block-2 block-0 block-9 block-2 block-8))
 (define row-2 (beside block-1 block-5 block-3 block-9 block-4 block-3 block-2 block-6 block-0 block-3)) ; height: 200
 (define row-3 (beside block-0 block-4 block-2 block-7 block-0 block-2 block-3 block-1 block-9 block-12)) ; height: 240
 (define row-4 (beside block-8 block-6 block-1 block-0 dots block-0 block-0 block-9 block-1 block-3))
-(define decorate (above row-1 row-2 row-3))
+
+;;; Full background
 (define bg
   (overlay/offset 0 -400
                   row-4
                   (overlay/offset 0 -250 
-                  row-3
-                  (overlay/offset 0 -125
-                  row-2 
-                  (overlay/offset 0 0 
-                                  row-1 
-                                  background)))))
+                                  row-3
+                                  (overlay/offset 0 -125
+                                                  row-2 
+                                                  (overlay/offset 0 0 
+                                                                  row-1 
+                                                                  background)))))
 ;; Display to test
 (overlay (mario-kirby 120) bg)
 
