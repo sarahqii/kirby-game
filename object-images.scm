@@ -881,20 +881,27 @@ canv
 (define star-2 (star 80 star-yellow star-yellow))
 (define star-3 (star 100 star-yellow star-yellow))
 (define star-4 (star 150 star-yellow star-yellow))
+(define star-5 (star 200 star-yellow star-yellow))
 
-background
-dots
 (overlay/offset -5 0 (rotate 40 star-0) (square 70 "solid" "transparent"))
 (overlay/offset -8 -8 (rotate 10 star-0) (square 70 "solid" "transparent"))
 (overlay/offset 0 0 (rotate -40 star-1) (square 90 "solid" "transparent"))
 (overlay/offset -5 0 (rotate 60 star-2) (square 120 "solid" "transparent"))
 (overlay/offset -10 -5 (rotate 20 star-2) (square 130 "solid" "transparent"))
+(overlay/offset 0 2 (rotate 20 star-3) (square 130 "solid" "transparent"))
+(overlay/offset 0 2 (rotate -20 star-3) (square 130 "solid" "transparent"))
+(overlay/offset 0 10 (rotate 30 star-4) (square 200 "solid" "transparent"))
+(overlay/offset 2 10 (rotate -30 star-4) (square 200 "solid" "transparent"))
+(overlay/offset 9 20 (rotate 20 star-5) (square 240 "solid" "transparent"))
+(overlay/offset 9 20 (rotate -20 star-5) (square 240 "solid" "transparent"))
+
 (rotate 40 (overlay dots (rectangle 200 100 "solid" "transparent")))
+(rotate -40 (overlay dots (rectangle 200 100 "solid" "transparent")))
 star-1
 star-2
 star-3
 star-4
-
+star-5
 ; ---------------------
 ;;; Ball Click Effect |
 ; ---------------------
