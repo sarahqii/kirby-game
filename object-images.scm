@@ -58,9 +58,9 @@
 ;;;   length: integer?, non-negative
 ;;; Draws an image of a star with outline
 (define star
-  (lambda (length)
-    (overlay (make-star (+ length 0.8) "outline" "white")
-             (make-star length "solid" star-yellow))))
+  (lambda (length color1 color2)
+    (overlay (make-star (+ length 0.8) "outline" color1)
+             (make-star length "solid" color2))))
 
 ;; Complete ball
 
@@ -69,7 +69,7 @@
 ;;; Draws the image of a complete basic Kirby ball.
 (define basic-ball
   (lambda (length) 
-    (overlay (star (* length 1.2))
+    (overlay (star (* length 1.2) "white" star-yellow)
              (ball length "pink" darker-pink))))
 
 ;; Display to test
