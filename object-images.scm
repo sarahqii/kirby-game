@@ -866,42 +866,55 @@ canv
 ; ---------------------
 
 ;; Color Palette
-(define bg-yellow (color 253 211 36 1))
-; star-yellow
+(define bg-yellow (color 255 240 0 1))
+(define bg-star (color 255 252 0 1))
 
 (define background (rectangle 1000 600 "solid" bg-yellow))
+
 (define dots
-  (let* ([dot (overlay (circle 5 "solid" star-yellow) 
+  (let* ([dot (overlay (circle 5 "solid" bg-star) 
                        (square 20 "solid" "transparent"))]
          [1-row (apply beside (make-list 10 dot))])
     (apply above (make-list 5 1-row))))
 
-(define star-0 (star 40 star-yellow star-yellow))
-(define star-1 (star 60 star-yellow star-yellow))
-(define star-2 (star 80 star-yellow star-yellow))
-(define star-3 (star 100 star-yellow star-yellow))
-(define star-4 (star 150 star-yellow star-yellow))
-(define star-5 (star 200 star-yellow star-yellow))
+(define star-0 (star 40 bg-star bg-star))
+(define star-1 (star 60 bg-star bg-star))
+(define star-2 (star 80 bg-star bg-star))
+(define star-3 (star 100 bg-star bg-star))
+(define star-4 (star 150 bg-star bg-star))
+(define star-5 (star 200 bg-star bg-star))
+(define block-0 (square 10 "solid" "transparent"))
+(define block-1 (overlay/offset -5 0 (rotate 40 star-0) (square 70 "solid" "transparent")))
+(define block-2 (overlay/offset -8 -8 (rotate 10 star-0) (square 70 "solid" "transparent")))
+(define block-3 (overlay/offset 0 0 (rotate -40 star-1) (square 90 "solid" "transparent")))
+(define block-4 (overlay/offset -5 0 (rotate 60 star-2) (square 120 "solid" "transparent")))
+(define block-5 (overlay/offset -10 -5 (rotate 20 star-2) (square 130 "solid" "transparent")))
+(define block-6 (overlay/offset 0 2 (rotate 20 star-3) (square 130 "solid" "transparent")))
+(define block-7 (overlay/offset 0 2 (rotate -20 star-3) (square 130 "solid" "transparent")))
+(define block-8 (overlay/offset 0 10 (rotate 30 star-4) (square 200 "solid" "transparent")))
+(define block-9 (overlay/offset 2 10 (rotate -30 star-4) (square 200 "solid" "transparent")))
+(define block-10 (overlay/offset 9 20 (rotate 20 star-5) (square 240 "solid" "transparent")))
+(define block-11 (overlay/offset 9 20 (rotate -20 star-5) (square 240 "solid" "transparent")))
+(define block-12 (rotate 10 (overlay dots (rectangle 200 100 "solid" "transparent"))))
+(define block-13 (rotate -40 (overlay dots (rectangle 200 100 "solid" "transparent"))))
+(define row-1 (beside block-13 block-3 block-0 block-4 block-2 block-0 block-9 block-2 block-8))
+(define row-2 (beside block-1 block-5 block-3 block-9 block-4 block-3 block-2 block-6 block-0 block-3)) ; height: 200
+(define row-3 (beside block-0 block-4 block-2 block-7 block-0 block-2 block-3 block-1 block-9 block-12)) ; height: 240
+(define row-4 (beside block-8 block-6 block-1 block-0 dots block-0 block-0 block-9 block-1 block-3))
+(define decorate (above row-1 row-2 row-3))
+(define bg
+  (overlay/offset 0 -400
+                  row-4
+                  (overlay/offset 0 -250 
+                  row-3
+                  (overlay/offset 0 -125
+                  row-2 
+                  (overlay/offset 0 0 
+                                  row-1 
+                                  background)))))
+;; Display to test
+(overlay (mario-kirby 120) bg)
 
-(overlay/offset -5 0 (rotate 40 star-0) (square 70 "solid" "transparent"))
-(overlay/offset -8 -8 (rotate 10 star-0) (square 70 "solid" "transparent"))
-(overlay/offset 0 0 (rotate -40 star-1) (square 90 "solid" "transparent"))
-(overlay/offset -5 0 (rotate 60 star-2) (square 120 "solid" "transparent"))
-(overlay/offset -10 -5 (rotate 20 star-2) (square 130 "solid" "transparent"))
-(overlay/offset 0 2 (rotate 20 star-3) (square 130 "solid" "transparent"))
-(overlay/offset 0 2 (rotate -20 star-3) (square 130 "solid" "transparent"))
-(overlay/offset 0 10 (rotate 30 star-4) (square 200 "solid" "transparent"))
-(overlay/offset 2 10 (rotate -30 star-4) (square 200 "solid" "transparent"))
-(overlay/offset 9 20 (rotate 20 star-5) (square 240 "solid" "transparent"))
-(overlay/offset 9 20 (rotate -20 star-5) (square 240 "solid" "transparent"))
-
-(rotate 40 (overlay dots (rectangle 200 100 "solid" "transparent")))
-(rotate -40 (overlay dots (rectangle 200 100 "solid" "transparent")))
-star-1
-star-2
-star-3
-star-4
-star-5
 ; ---------------------
 ;;; Ball Click Effect |
 ; ---------------------
