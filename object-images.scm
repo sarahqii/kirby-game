@@ -882,8 +882,14 @@ canv
 (define star-3 (star 100 star-yellow star-yellow))
 (define star-4 (star 150 star-yellow star-yellow))
 
+background
 dots
-star-0
+(overlay/offset -5 0 (rotate 40 star-0) (square 70 "solid" "transparent"))
+(overlay/offset -8 -8 (rotate 10 star-0) (square 70 "solid" "transparent"))
+(overlay/offset 0 0 (rotate -40 star-1) (square 90 "solid" "transparent"))
+(overlay/offset -5 0 (rotate 60 star-2) (square 120 "solid" "transparent"))
+(overlay/offset -10 -5 (rotate 20 star-2) (square 130 "solid" "transparent"))
+(rotate 40 (overlay dots (rectangle 200 100 "solid" "transparent")))
 star-1
 star-2
 star-3
