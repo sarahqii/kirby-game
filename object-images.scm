@@ -691,6 +691,61 @@ canv
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
 
+(define hat
+  (lambda (length)
+    (overlay
+      (overlay
+        (overlay
+          (rectangle (* length 0.75) (* length 0.25) "solid" "red")
+          (rectangle (* length 0.25) (* length 0.75) "solid" "red"))
+        (overlay
+          (circle (* length 0.5) "solid" (color 249 246 238 1))
+          (circle (* length 0.6) "solid" (color 237 234 222 1))))
+      (rectangle (* length 2.0) (* length 0.8) "solid" (color 237 234 222 1)))))
+
+
+(define glasses
+  (lambda (length)
+    (beside/align "bottom"
+        (rectangle (* length 0.15) (* length 1.2) "solid" "blue")
+    (beside
+      (overlay
+        (circle (* length 0.3) "solid" "white")
+        (circle (* length 0.4) "solid" "blue"))
+      (rectangle (* length 0.2) (* length 0.2) "solid" "blue") 
+      (overlay
+        (circle (* length 0.3) "solid" "white")
+        (circle (* length 0.4) "solid" "blue")))
+      (rectangle (* length 0.15) (* length 1.2) "solid" "blue"))))
+
+
+(define syringe
+  (lambda (length)
+     (above
+       (rectangle (* length 0.1) (* length 0.5) "outline" "black")
+       (above
+         (rectangle (* length 0.5) (* length 0.75) "solid" "black")
+         (rectangle (* length 0.5) (* length 1.5) "solid" "gray"))
+       (above
+         (rectangle (* length 0.25) (* length 0.375) "solid" "black")
+         (ellipse (* length 0.5) (* length 0.25) "solid" "black")))))
+(define doctor-kirby-with-hat
+  (lambda (size)
+    (overlay/offset (-(* size 0.5)) (* size 0.5)
+      (hat (* 0.8 size)) (basic-kirby-offset size))))
+
+(define doctor-kirby-with-glasses
+  (lambda (size)
+    (overlay
+      (glasses (* 0.75 size)) (doctor-kirby-with-hat size))))
+
+
+(define doctor-kirby
+  (lambda (size)
+    (overlay/offset (- (* size 0.005)) (* size 0.5)
+      (doctor-kirby-with-glasses size) (syringe (* size 0.5)))))
+
+(doctor-kirby 80)
 ; ------------------------
 ;;; Kirby 4: Santa Kirby |
 ; ------------------------
