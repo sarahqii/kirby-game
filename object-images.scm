@@ -191,23 +191,38 @@
 ;;; OBJECT 4: Christmas Ball   |
 ; -----------------------------
 
+;; Color Palette
+(define darker-blue (color 49 40 102 0.9))
+
+;;; (tree length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws the green part of the noel tree.
 (define tree
-  (overlay/offset -5 11 (triangle 23 "solid" "seagreen")
-          (overlay/offset -2 10 (triangle 28 "solid" "seagreen")
-                                (triangle 33 "solid" "seagreen"))))
+  (lambda (length)
+    (overlay/offset (- (/ length 8)) (* length (/ 11 40)) 
+                    (triangle (* length (/ 23 40)) "solid" "seagreen")
+                    (overlay/offset (- (/ length 20)) (/ length 4) 
+                                    (triangle (* length (/ 28 40)) "solid" "seagreen")
+                                    (triangle 33 "solid" "seagreen")))))
 
-;;; Tree-body
-;;; Addes the start and tree trunk to the leaf part
+;;; (tree-body length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws the trunk and align that to make the whole tree.
 (define tree-body
-    (above (circle 4 "solid" "gold") tree (rectangle 4 12 "solid" "brown")))
+  (lambda (length)
+    (above (circle (/ length 10) "solid" "gold") 
+           (tree length)
+           (rectangle (/ length 10) (/ length (/ 10 3)) "solid" "brown"))))
 
-;;; Christmas-ball
-;;; Creates a final Christmas ball for Kirby to eat. 
-(define Christmas-ball
-  (overlay tree-body (overlay/offset 1 0.5 (circle 38 "solid" "darkslateblue") (circle 39 "solid" "gray"))
-  ))
+;;; (christmas-ball length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws the complete christmas ball for Kirby to eat.
+(define christmas-ball
+  (lambda (length)
+    (overlay (tree-body length) (ball length "darkslateblue" darker-blue))))
 
-Christmas-ball
+;; Display to test
+(christmas-ball 40)
         
 ; ------------------------
 ;;; Kirby 0: Basic Kirby |
@@ -489,6 +504,9 @@ canv
                     (kirby-with-racket size) 
                     (tennis-ball (* 0.18 size)))))
 
+;; Display to test
+(kirby-with-racket 120)
+
 ;;; An animation of tennis kirby bouncing the ball up and down.
 (ignore
   (animate-with
@@ -667,7 +685,7 @@ canv
                                     (mario-with-mustache size)))))
 
 ;; Display to test
-(mario-kirby 100)
+(mario-kirby 120)
 
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
@@ -682,8 +700,8 @@ canv
 ;;; Returns a white mustache. 
 (define santa-mustache
   (lambda (size)
-                (path (* 19 size)
-                      (* 19 size)
+                (path size
+                      size
                       (list (pair (* size 1.15) (* size 0))      ; 1st point
                             (pair (* size 1.8) (* size 0.19))    ; 2nd point
                             (pair (* size 2.075) (* size 0.575)) ; 3rd point
@@ -696,7 +714,7 @@ canv
                             (pair (* size 0.5) (* size 0.575))   ; 10th pint
                             (pair (* size 0.23) (* size 0.575))  ; 11th pint
                             (pair (* size 0.5) (* size 0.19))    ; 12th point
-                            (pair (* size 1.15) (* size 0)))     ; top point (need to return)
+                        )     
                       "solid"
                       "white" )))
 
@@ -740,22 +758,22 @@ canv
 (define basic-santa-kirby
   (lambda (size)
     (overlay/offset (* 0.47 size) (* 1.5 size) 
-                    (face size) 
+                    (santa-face size) 
                     (feet size))))
 
 ;;; (santa-hat-base size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;; Returns a base santa hat.
 (define santa-hat-base
   (lambda (size)
-  (overlay/offset (* 0.16 size) (* -1.1 size) 
-    (overlay (ellipse (* 1.95 size) (* 0.45 size) "solid" "white")
-                      (ellipse (* 2 size) (* 0.5 size) "solid" "goldenrod"))
-     (overlay (triangle (* 1.55 size) "solid" "firebrick") 
-              (triangle (* 1.7 size) "solid" "maroon")))))
+    (overlay/offset (* 0.16 size) (* -1.1 size) 
+      (overlay (ellipse (* 1.95 size) (* 0.45 size) "solid" "white")
+                        (ellipse (* 2 size) (* 0.5 size) "solid" "goldenrod"))
+       (overlay (triangle (* 1.55 size) "solid" "firebrick") 
+                (triangle (* 1.7 size) "solid" "maroon")))))
 
 ;;; (santa-hat size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;; Returns a final santa hat with the white ball on top of santa-hat-base.
 (define santa-hat
   (lambda (size)
@@ -765,49 +783,49 @@ canv
                     (santa-hat-base size))))
 
 ;;; (circle-1 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the outermost red circle.
 (define circle-1 
   (lambda (size)
     (circle (* 0.5 size) "solid" "red")))
 
 ;;; (circle-2 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the 2nd outermost orange circle.
 (define circle-2 
   (lambda (size)
     (circle (* 0.4 size) "solid" "orange")))
 
 ;;; (circle-3 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the 3rd outermost yellow circle.
 (define circle-3 
   (lambda (size)
     (circle (* 0.3 size) "solid" "yellow")))
 
 ;;; (circle-4 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the 4th outermost green circle.
 (define circle-4 
   (lambda (size)
     (circle (* 0.2 size) "solid" "green")))
 
 ;;; (circle-5 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the 5th outermost blue circle.
 (define circle-5 
   (lambda (size)
     (circle (* 0.1 size) "solid" "blue")))
 
 ;;; (circle-6 size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns the innermost violet circle.
 (define circle-6 
   (lambda (size)
     (circle (* 0.05 size) "solid" "violet")))
 
 ;;; (candy size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;; Returns a drawing with all the circles on top of each other.
 (define candy 
   (lambda (size)
@@ -816,50 +834,51 @@ canv
              (circle-2 size) (circle-1 size))))
 
 ;;; (stick size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns a brown stick drawing.
 (define stick
   (lambda (size)
     (rectangle (* 0.1 size) (* 0.9 size) "solid" "brown")))
 
 ;;; (lollipop size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns a final drawing of lollipop.
 (define lollipop
    (lambda (size)
      (above (candy size) (stick size))))
 
 ;;; (santa-kirby-with-lollipop size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns a drawing with kirby holding the lollipop
 (define santa-kirby-with-lollipop
   (lambda (size)
       (overlay/offset (* -0.7 size) (* -0.4 size) 
                       (basic-santa-kirby size) 
-                      (beside (square 15 "solid" "black") 
+                      (beside (square 15 "solid" "transparent") 
                               (rotate 345 (lollipop size))))))
 
 ;;; (final-santa-kirby size) -> drawing?
-;;; size : integer? (non-negative)
+;;;   size : integer? (non-negative)
 ;;;; Returns a final Santa kirby drawing.
-(define final-santa-kirby
+(define santa-kirby
   (lambda (size)
      (overlay/offset (* -0.97 size) (* 1.1 size) 
                      (santa-hat size) 
                      (santa-kirby-with-lollipop size))))
 
-;;; (final-santa-kirby-with-background size) -> drawing?
-;;; size : integer? (non-negative)
-;;;; Returns a final santa kirby in a black background so that we can see his mustache.
-(define fina-santa-kirby-with-background
-  (lambda (size)
-  (overlay/offset (* -1 size) (* -1.8 size) 
-                  (final-santa-kirby size) 
-                  (rectangle (* 9 size) (* 7 size) "solid" "black"))))
+; ;;; (final-santa-kirby-with-background size) -> drawing?
+; ;;;   size : integer? (non-negative)
+; ;;;; Returns a final santa kirby in a black background so that we can see his mustache.
+; (define fina-santa-kirby-with-background
+;   (lambda (size)
+;     (overlay/offset (* -1 size) (* -1.8 size) 
+;                     (final-santa-kirby size) 
+;                     (rectangle (* 9 size) (* 7 size) "solid" "black"))))
 
-(fina-santa-kirby-with-background 100)
+; (fina-santa-kirby-with-background 100)
 
-canv
+;; Display to test
+(santa-kirby 120)
 
 ; ---------------------
 ;;; Background canvas |
@@ -922,8 +941,6 @@ canv
                                                   (overlay/offset 0 0 
                                                                   row-1 
                                                                   background)))))
-;; Display to test
-(overlay (mario-kirby 120) bg)
 
 ; ------------------
 ;;; The Full Image |
@@ -940,7 +957,7 @@ canv
                                   (overlay/offset 0 
                                                   125 
                                                   (medical-ball 40)
-                                                  christmas-ball))))
+                                                  (christmas-ball 40)))))
 
 ;; The background for basic-kirby with 4 balls.
 (define basic-background
