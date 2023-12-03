@@ -361,7 +361,7 @@ Christmas-ball
 
 ;; ANIMATION TEST
 
-(define canv (make-canvas 400 400))
+(define canv (make-canvas 1000 600))
 
 ;; (animate-with time) -> animation?
 ;;   time: number?, a non-negative number
@@ -925,6 +925,41 @@ canv
 ;; Display to test
 (overlay (mario-kirby 120) bg)
 
+; ------------------
+;;; The Full Image |
+; ------------------
+
+;; 4 balls (tennis, mario, doctor, santa) above each other
+(define basic-bg-balls
+  (overlay/offset 0
+                  125
+                  (tennis-ball 40)
+                  (overlay/offset 0
+                                  125
+                                  (mario-ball 40 "white" "red")
+                                  (overlay/offset 0 
+                                                  125 
+                                                  (medical-ball 40)
+                                                  christmas-ball))))
+
+;; The background for basic-kirby with 4 balls.
+(define basic-background
+  (overlay/offset -700 -70 basic-bg-balls bg))
+
+;;; An animation for basic kirby bouncing his feet with the background and 4 balls.
+(ignore
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-drawing canv basic-background 0 0)
+        (draw-drawing canv
+                      (if (odd? (round (* 60 time)))
+                          (basic-kirby 120)
+                          (basic-kirby-offset 120))
+                      180
+                      180)))))
+canv
+        
 ; ---------------------
 ;;; Ball Click Effect |
 ; ---------------------
