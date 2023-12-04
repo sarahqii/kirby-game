@@ -11,7 +11,7 @@ If you're a Kirby-lover, you would love this game! It is very simple. There are 
 ## How to play this!
 1. Download kirby-transformation-game.scm and run it on this online GUI: [Scamper](https://csc151.cs.grinnell.edu/scamper/) 
 2. Click on this button to open the play screen.
-
+![Screenshot 2023-12-04 102233](https://github.com/khanhdo05/kirby-game/assets/112164825/ac1e6dab-f9bb-4048-8daa-7813a483d610)
 3. Play away!
 ## Language used: Scheme/Scamper
 Scheme is a dialect of the **Lisp** family of programming languages. Scheme was created during the 1970s at the MIT Computer Science and Artificial Intelligence Laboratory (MIT AI Lab) and released by its developers, Guy L. Steele and Gerald Jay Sussman, via a series of memos now known as the Lambda Papers (Wikipedia). <br>
