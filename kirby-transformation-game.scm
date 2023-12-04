@@ -5,6 +5,7 @@
 (import image)
 (import canvas)
 (import music)
+(import html)
 
 (define canv (make-canvas 1000 600))
 
@@ -1309,4 +1310,4 @@ canv
 (repeat 20
   (mod (tempo qn 180) 
      (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
-          (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
+          (mod (dynamics 10) (mod (instrument 57) underlying-bgm))))))
