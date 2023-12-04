@@ -3,6 +3,7 @@
 ;;; This file includes all the static images needed for the game.
 
 (import image)
+(import lab)
 (import canvas)
 (import music)
 (import html)
@@ -76,7 +77,7 @@
              (ball length "pink" darker-pink))))
 
 ;; Display to test
-(basic-ball 40)
+;(basic-ball 40)
 
 ; -------------------------
 ;;; OBJECT 1: TENNIS BALL |
@@ -115,7 +116,7 @@
       (overlay/align "middle" "bottom" curve (overlay/align "middle" "top" curve ball)))))
 
 ;; Display to test
-(tennis-ball 40)
+;(tennis-ball 40)
 
 ; ------------------------
 ;;; OBJECT 2: MARIO LOGO |
@@ -156,7 +157,7 @@
              (ball length color2 darker-red))))
 
 ;; Display to test
-(mario-ball 40 "white" "red")
+;(mario-ball 40 "white" "red")
 
 ; --------------------------
 ;;; OBJECT 3: Medical Ball |
@@ -188,7 +189,7 @@
              (ball length bone-white darker-bone-white))))
 
 ;; Display to test
-(medical-ball 40)
+;(medical-ball 40)
 
 ; -----------------------------
 ;;; OBJECT 4: Christmas Ball   |
@@ -225,7 +226,7 @@
     (overlay (tree-body length) (ball length "darkslateblue" darker-blue))))
 
 ;; Display to test
-(christmas-ball 40)
+;(christmas-ball 40)
         
 ; ------------------------
 ;;; Kirby 0: Basic Kirby |
@@ -716,7 +717,7 @@
                                     (mario-kirby size)))))
 
 ;; Display to test
-(mario-kirby 120)
+;(mario-kirby 120)
 
 ; -------------------------
 ;;; Kirby 3: Doctor Kirby |
@@ -793,7 +794,7 @@
       (doctor-kirby-with-glasses size) (syringe (* size 0.5)))))
 
 ; Display to test
-(doctor-kirby 120)
+;(doctor-kirby 120)
 
 ; ------------------------
 ;;; Kirby 4: Santa Kirby |
@@ -1005,10 +1006,10 @@
                   mid-row 
                   top-bot-row))])))
 
-(my-fractal 80 "lightblue" 4)
+;(my-fractal 80 "lightblue" 4)
 
 ;; Display to test
-(santa-kirby 120)
+;(santa-kirby 120)
 
 ; ---------------------
 ;;; Background canvas |
@@ -1159,9 +1160,9 @@
           (cond
             [(equal? (vector-ref current-kirby 0) "title")
              (begin
-               (draw-text canv "Kirby Transformation!" 60 180 "solid" "hotpink" "60px comic sans ms") 0 0
+               (draw-text canv "Kirby Transformation!" 50 180 "solid" "hotpink" "60px comic sans ms") 0 0
                (draw-text canv "Click on balls to make Kirby appear!" 115 230 "solid" "hotpink" "30px comic sans ms") 0 0
-               (draw-text canv "Instruction Manual" 250 300 "solid" "hotpink" "20px Courier") 0 0
+               (draw-text canv "Instruction Manual" 250 300 "solid" "hotpink" "20px comic sans ms") 0 0
                (draw-text canv "·Use the mouse to interact with the game." 140 340 "solid" "hotpink" "20px Courier") 0 0
                (draw-text canv "·Click on a power ball to transform Kirby." 140 370 "solid" "hotpink" "20px Courier") 0 0
                (draw-text canv "·Click on the pink power ball to return." 140 400 "solid" "hotpink" "20px Courier") 0 0
@@ -1307,7 +1308,8 @@ canv
        underlying-bgm-1))
 
 ;;; The full bgm, the main and underlying bgm combined, repeated 20 times.
+(description "Play Me!")
 (repeat 20
   (mod (tempo qn 180) 
      (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
-          (mod (dynamics 10) (mod (instrument 57) underlying-bgm))))))
+          (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
