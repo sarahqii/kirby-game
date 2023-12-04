@@ -691,7 +691,6 @@ canv
 ;;; Kirby 3: Doctor Kirby |
 ; -------------------------
 
-        
 ;;; (hat length) -> drawing?
 ;;;   length: integer?, non-negative
 ;;; Draws the hat of the doctor kirby.
