@@ -3,6 +3,7 @@
 ;;; This file includes all the static images needed for the game.
 
 (import image)
+(import lab)
 (import canvas)
 (import music)
 (import html)
@@ -1307,7 +1308,8 @@ canv
        underlying-bgm-1))
 
 ;;; The full bgm, the main and underlying bgm combined, repeated 20 times.
+(description "Play Me!")
 (repeat 20
   (mod (tempo qn 180) 
      (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
-          (mod (dynamics 10) (mod (instrument 57) underlying-bgm))))))
+          (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
