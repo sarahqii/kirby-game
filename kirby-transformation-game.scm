@@ -6,6 +6,8 @@
 (import canvas)
 (import music)
 
+(define canv (make-canvas 1000 600))
+
 ; -------------------
 ;;; BASE ROUND BALL |
 ; -------------------
@@ -374,55 +376,89 @@
                     (face size) 
                     (feet size))))
 
-;; ANIMATION TEST
-
-(define canv (make-canvas 1000 600))
-
-;; (animate-with time) -> animation?
-;;   time: number?, a non-negative number
-;; Animation for basic-kirby.
-(ignore
-  (animate-with
-    (lambda (time)
-      (begin
-        (draw-rectangle canv 0 0 300 300 "solid" "white")
-        (draw-drawing canv
-                      (if (odd? (round (* 60 time)))
-                          (basic-kirby 100)
-                          (basic-kirby-offset 100))
-                      0
-                      0)))))
-
-canv
-
 ; --------------------------------
 ;;; Kirby 1: Tennis Player Kirby |
 ; --------------------------------
 
+;; Color Palette
+(define bg-yellow (color 255 240 0 1))
+  
 ;;; (racket-frame size) -> image?
 ;;;   size : number?, non-negative
 ;;; Draws the frame of the racket. 
 (define racket-frame
   (lambda (size)
     (overlay
-      (ellipse (* 0.8 size) size "solid" "white")
+      (ellipse (* 0.8 size) size "solid" bg-yellow)
       (ellipse (* 0.86 size) (* 1.06 size) "solid" "blue"))))
 
-;;; (racket-string size) -> image?
+;;; (racket-vertical-string size) -> image?
 ;;;   size : number?, non-negative
-;;; Draws one string of the racket, length = size.
-(define racket-string
+;;; Draws one vertical string of the racket, length = size.
+(define racket-vertical-string
   (lambda (size)
-    (rectangle (* 0.02 size) size "solid" "black")))
+    (rectangle 2 size "solid" "black")))
+
+;;; (racket-horizontal-string size) -> image?
+;;;   size : number?, non-negative
+;;; Draws one horizontal string of the racket, length = size.
+(define racket-horizontal-string
+  (lambda (size)
+    (rectangle (* 0.8 size) 2 "solid" "black")))
+
+;;; (racket-frame-with-strings-1 size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the half the frame of the racket with vertical strings.
+(define racket-frame-with-strings-1
+  (lambda (size)
+    (overlay/offset (- (* 0.14 size))
+                    (- (* 0.16 size))
+                    (racket-vertical-string (* 0.73 size))
+                    (overlay/offset (- (* 0.28 size))
+                                    (- (* 0.06 size))
+                                    (racket-vertical-string (* 0.94 size))
+                                    (overlay (racket-vertical-string size) 
+                                             (racket-frame size))))))
+
+;;; (racket-frame-with-strings-2 size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the full frame of the racket with vertical strings.
+(define racket-frame-with-strings-2
+  (lambda (size)
+    (overlay/offset (- (* 0.7 size))
+                    (- (* 0.16 size))
+                    (racket-vertical-string (* 0.73 size))
+                    (overlay/offset (- (* 0.56 size))
+                                    (- (* 0.06 size))
+                                    (racket-vertical-string (* 0.94 size))
+                                    (racket-frame-with-strings-1 size)))))
+
+;;; (racket-frame-with-strings-3 size) -> image?
+;;;   size : number?, non-negative
+;;; Draws the frame of the racket with full vertical strings and half horizontal strings.
+(define racket-frame-with-strings-3
+  (lambda (size)
+    (overlay/offset (- (* 0.14 size))
+                    (- (* 0.16 size))
+                    (racket-horizontal-string (* 0.72 size))
+                    (overlay/offset (- (* 0.05 size))
+                                    (- (* 0.33 size))
+                                    (racket-horizontal-string (* 0.95 size))
+                                    (overlay (racket-horizontal-string size) 
+                                             (racket-frame-with-strings-2 size))))))
 
 ;;; (racket-frame-with-strings size) -> image?
 ;;;   size : number?, non-negative
-;;; Draws the frame of the racket with strings.
+;;; Draws the frame of the racket with full vertical strings and full horizontal strings.
 (define racket-frame-with-strings
   (lambda (size)
-    (overlay
-      (racket-string size)
-      (racket-frame size))))
+    (overlay/offset (- (* 0.14 size))
+                    (- (* 0.88 size))
+                    (racket-horizontal-string (* 0.72 size))
+                    (overlay/offset (- (* 0.05 size))
+                                    (- (* 0.7 size))
+                                    (racket-horizontal-string (* 0.95 size))
+                                    (racket-frame-with-strings-3 size)))))
 
 ;;; (racket-connect size) -> image?
 ;;;   size : number?, non-negative
@@ -431,7 +467,7 @@ canv
   (lambda (size)
     (rotate 180 
       (overlay
-        (triangle (* 0.59 size) "solid" "white")
+        (triangle (* 0.59 size) "solid" bg-yellow)
         (triangle (* 0.73 size) "solid" "black")))))
 
 ;;; (racket-connected size) -> image?
@@ -503,23 +539,6 @@ canv
     (overlay/offset (* 2.6 size) (* 1.6 size) 
                     (kirby-with-racket size) 
                     (tennis-ball (* 0.18 size)))))
-
-;; Display to test
-(kirby-with-racket 120)
-
-;;; An animation of tennis kirby bouncing the ball up and down.
-(ignore
-  (animate-with
-    (lambda (time)
-      (begin
-        (draw-rectangle canv 0 0 2000 2000 "solid" "white")
-        (draw-drawing canv
-                      (if (odd? (round (* 60 time)))
-                          (tennis-kirby-ball-down 100)
-                          (tennis-kirby-ball-up 100))
-                      0
-                      0)))))
-canv
         
 ; ------------------------
 ;;; Kirby 2: Mario Kirby |
@@ -958,7 +977,6 @@ canv
 ; ---------------------
 
 ;; Color Palette
-(define bg-yellow (color 255 240 0 1))
 (define bg-star (color 255 252 0 1))
 
 ;; Background: 1000 x 600 
@@ -1015,26 +1033,24 @@ canv
                                                                   row-1 
                                                                   background)))))
 
-; ------------------
-;;; The Full Image |
-; ------------------
+; -------------------------------------
+;;; Basic Background (The Full Image) |
+; -------------------------------------
 
-;; 4 balls (tennis, mario, doctor, santa) above each other
-(define basic-bg-balls
+(define bg-balls
   (overlay/offset 0
-                  125
-                  (tennis-ball 40)
+                  110
+                  (basic-ball 40)
                   (overlay/offset 0
-                                  125
-                                  (mario-ball 40 "white" "red")
-                                  (overlay/offset 0 
-                                                  125 
-                                                  (medical-ball 40)
-                                                  (christmas-ball 40)))))
-
-;; The background for basic-kirby with 4 balls.
-(define basic-background
-  (overlay/offset -700 -70 basic-bg-balls bg))
+                                  110
+                                  (tennis-ball 40)
+                                  (overlay/offset 0
+                                                  110
+                                                  (mario-ball 40 "white" "red")
+                                                  (overlay/offset 0 
+                                                                  110 
+                                                                  (medical-ball 40)
+                                                                  (christmas-ball 40))))))
 
 ;;; An animation for basic kirby bouncing his feet with the background and 4 balls.
 (ignore
@@ -1046,29 +1062,128 @@ canv
                       (if (odd? (round (* 60 time)))
                           (basic-kirby 120)
                           (basic-kirby-offset 120))
-                      180
+                      390
                       180)))))
 canv
 
+(define basic-background
+  (overlay/offset -700 -40 bg-balls bg))
+        
 ; ---------------------
 ;;; Text Introduction |
 ; ---------------------
 
 ;;; An introduction title of the game.        
+;; (ignore
+;;   (animate-with
+;;     (lambda (time)
+;;       (begin
+;;         (draw-text canv "Kirby Transformation!" 270 40 "solid" "hotpink" "40px comic sans ms")
+;;                       0
+;;                       0))))
+
+;; canv
+
+; --------------------
+;;; Ball Click Effect|
+; --------------------
+
+(define current-kirby
+  (vector "title"))
+
+(ignore 
+  (canvas-onclick canv
+    (lambda (x y)
+      (begin 
+        (cond 
+          [(and (and (<= 700 x) (<= x 780)) (and (<= 40 y) (<= y 120)))
+           (begin
+             (play-composition boom-end-sound)
+             (vector-set! current-kirby 0 "basic"))]
+          [(and (and (<= 700 x) (<= x 780)) (and (<= 150 y) (<= y 230)))
+           (begin
+             (play-composition boom-end-sound)
+             (vector-set! current-kirby 0 "tennis"))]
+          [(and (and (<= 700 x) (<= x 780)) (and (<= 260 y) (<= y 340)))
+           (begin
+             (play-composition boom-end-sound)
+             (vector-set! current-kirby 0 "mario"))]
+          [(and (and (<= 700 x) (<= x 780)) (and (<= 370 y) (<= y 450)))
+           (begin
+             (play-composition boom-end-sound)
+             (vector-set! current-kirby 0 "doctor"))]
+          [(and (and (<= 700 x) (<= x 780)) (and (<= 480 y) (<= y 560)))
+           (begin
+             (play-composition boom-end-sound)
+             (vector-set! current-kirby 0 "santa"))]
+          [else
+           (vector-set! current-kirby 0 (vector-ref current-kirby 0))])))))
+
+;;; A title and an instruction manual for the game.       
+
 (ignore
   (animate-with
     (lambda (time)
       (begin
-        (draw-text canv "Kirby Transformation!" 270 40 "solid" "hotpink" "40px comic sans ms")
+        (draw-drawing canv basic-background 0 0)
+          (cond
+            [(equal? (vector-ref current-kirby 0) "title")
+             (begin
+               (draw-text canv "Kirby Transformation!" 100 300 "solid" "hotpink" "50px comic sans ms")
+                          0
+                          0
+               (draw-text canv "Click on balls to make Kirby appear!" 110 350 "solid" "hotpink" "30px comic sans ms")
+                          0
+                          0)]
+            [(equal? (vector-ref current-kirby 0) "basic")
+             (begin
+               (draw-drawing canv basic-background 0 0)
+               (draw-drawing canv
+                             (if (odd? (round (* 60 time)))
+                                 (basic-kirby 120)
+                                 (basic-kirby-offset 120))
+                             180
+                             180))]
+            [(equal? (vector-ref current-kirby 0) "tennis")
+               (begin
+                 (draw-drawing canv basic-background 0 0)
+                 (draw-drawing canv
+                               (if (odd? (round (* 60 time)))
+                                   (tennis-kirby-ball-down 120)
+                                   (tennis-kirby-ball-up 120))
+                               147
+                               114))]
+            [(equal? (vector-ref current-kirby 0) "mario")
+             (draw-drawing canv (mario-kirby 120) 73 70)]
+            [(equal? (vector-ref current-kirby 0) "doctor")
+             (draw-drawing canv (doctor-kirby 120) 180 120)]
+            [(equal? (vector-ref current-kirby 0) "santa")
+             (draw-drawing canv (final-santa-kirby 120) 96 0)])))))
+        (draw-text 
+          canv "Kirby Transformation!" 0 70 "solid" "hotpink" "70px comic sans ms")
+        (draw-text
+          canv "Instruction Manual" 0 190 "solid" "black" "24px Courier")
+        (draw-text
+          canv "·Use the mouse to interact" 0 240 "solid" "black" "18px Courier")
+        (draw-text
+          canv "with the game." 15 260 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·Click on a power ball to" 0 290 "solid" "black" "18px Courier")
+        (draw-text
+          canv "transform Kirby into the" 15 310 "solid" "black" "18px Courier")
+        (draw-text
+          canv "related dressed-up version." 15 330 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·To return to the original" 0 360 "solid" "black" "18px Courier")
+        (draw-text
+          canv "Kirby,click on the pink power" 15 380 "solid" "black" "18px Courier")
+        (draw-text
+          canv "ball." 15 400 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·Have fun!" 0 430 "solid" "black" "18px Courier")
                       0
                       0))))
-
 canv
-
-; ---------------------
-;;; Ball Click Effect |
-; ---------------------
-
 
 ; ----------------
 ;;; Sound Effect |
