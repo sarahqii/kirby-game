@@ -1063,6 +1063,8 @@
 ;;; Basic Background (The Full Image) |
 ; -------------------------------------
 
+;; The 5 balls, placed above each other in the following order: basic, tennis, mario,
+;; doctor, santa.
 (define bg-balls
   (overlay/offset 0
                   110
@@ -1078,7 +1080,8 @@
                                                                   (medical-ball 40)
                                                                   (christmas-ball 40))))))
 
-
+        
+;; The background for all kirbies.
 (define basic-background
   (overlay/offset -700 -40 bg-balls bg))
         
@@ -1086,20 +1089,26 @@
 ;;; Sound Effect |
 ; ----------------
 
+;; The sound effect for clicking on a ball, without mod percussion.
 (define largest-sound
   (lambda (midi-note)
-  (mod (dynamics 127) (note midi-note qn))))
+    (mod (dynamics 127) (note midi-note qn))))
 
+;; The sound effect for clicking on a ball, with mod percussion.
 (define boom-end-sound
   (mod percussion (largest-sound 39)))
         
 ; --------------------
 ;;; Ball Click Effect|
 ; --------------------
-
+        
+;; The vector for determining the state of the displayed kirby.
 (define current-kirby
   (vector "title"))
-
+        
+;; When the user clicks on a ball, kirby transforms into the type of kirby described
+;; by the ball, with a short sound effect. If the user clicks anywhere else, kirby
+;; remains the same.
 (ignore 
   (canvas-onclick canv
     (lambda (x y)
@@ -1127,7 +1136,9 @@
              (vector-set! current-kirby 0 "santa"))]
           [else
            (vector-set! current-kirby 0 (vector-ref current-kirby 0))])))))
-
+        
+;; The beginning page: a page with text descriptions on how to play the game.
+;; When user clicks on a ball, draws the animation for each kirby.
 (ignore
   (animate-with
     (lambda (time)
@@ -1163,6 +1174,7 @@
             [(equal? (vector-ref current-kirby 0) "santa")
              (draw-drawing canv (santa-kirby 120) 96 0)])))))
 
+;; The canvas.        
 canv
 
 ; -----------
@@ -1275,5 +1287,3 @@ canv
   (mod (tempo qn 180) 
      (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
           (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
-; 61 is best, but doesn't work for certain sounds
-; 60, 57, 58
