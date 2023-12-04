@@ -1051,6 +1051,30 @@
                                                                   110 
                                                                   (medical-ball 40)
                                                                   (christmas-ball 40))))))
+                                  125
+                                  (mario-ball 40 "white" "red")
+                                  (overlay/offset 0 
+                                                  125 
+                                                  (medical-ball 40)
+                                                  (christmas-ball 40)))))
+
+;; The background for basic-kirby with 4 balls.
+(define basic-background
+  (overlay/offset -700 -70 basic-bg-balls bg))
+
+;;; An animation for basic kirby bouncing his feet with the background and 4 balls.
+(ignore
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-drawing canv basic-background 0 0)
+        (draw-drawing canv
+                      (if (odd? (round (* 60 time)))
+                          (basic-kirby 120)
+                          (basic-kirby-offset 120))
+                      390
+                      180)))))
+canv
 
 (define basic-background
   (overlay/offset -700 -40 bg-balls bg))
@@ -1105,6 +1129,8 @@
           [else
            (vector-set! current-kirby 0 (vector-ref current-kirby 0))])))))
 
+;;; A title and an instruction manual for the game.       
+
 (ignore
   (animate-with
     (lambda (time)
@@ -1143,7 +1169,30 @@
              (draw-drawing canv (doctor-kirby 120) 180 120)]
             [(equal? (vector-ref current-kirby 0) "santa")
              (draw-drawing canv (final-santa-kirby 120) 96 0)])))))
-
+        (draw-text 
+          canv "Kirby Transformation!" 0 70 "solid" "hotpink" "70px comic sans ms")
+        (draw-text
+          canv "Instruction Manual" 0 190 "solid" "black" "24px Courier")
+        (draw-text
+          canv "·Use the mouse to interact" 0 240 "solid" "black" "18px Courier")
+        (draw-text
+          canv "with the game." 15 260 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·Click on a power ball to" 0 290 "solid" "black" "18px Courier")
+        (draw-text
+          canv "transform Kirby into the" 15 310 "solid" "black" "18px Courier")
+        (draw-text
+          canv "related dressed-up version." 15 330 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·To return to the original" 0 360 "solid" "black" "18px Courier")
+        (draw-text
+          canv "Kirby,click on the pink power" 15 380 "solid" "black" "18px Courier")
+        (draw-text
+          canv "ball." 15 400 "solid" "black" "18px Courier")
+        (draw-text
+          canv "·Have fun!" 0 430 "solid" "black" "18px Courier")
+                      0
+                      0))))
 canv
 
 ; ----------------
