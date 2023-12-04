@@ -949,7 +949,7 @@
                       (beside (square 15 "solid" "transparent") 
                               (rotate 345 (lollipop size))))))
 
-;;; (final-santa-kirby size) -> drawing?
+;;; (anta-kirby size) -> drawing?
 ;;;   size : integer? (non-negative)
 ;;;; Returns a final Santa kirby drawing.
 (define santa-kirby
@@ -957,17 +957,6 @@
      (overlay/offset (* -0.97 size) (* 1.1 size) 
                      (santa-hat size) 
                      (santa-kirby-with-lollipop size))))
-
-; ;;; (final-santa-kirby-with-background size) -> drawing?
-; ;;;   size : integer? (non-negative)
-; ;;;; Returns a final santa kirby in a black background so that we can see his mustache.
-; (define fina-santa-kirby-with-background
-;   (lambda (size)
-;     (overlay/offset (* -1 size) (* -1.8 size) 
-;                     (final-santa-kirby size) 
-;                     (rectangle (* 9 size) (* 7 size) "solid" "black"))))
-
-; (fina-santa-kirby-with-background 100)
 
 ;;; (diamond length color) -> drawing?
 ;;;   length: integer?, non-negative
@@ -1172,7 +1161,7 @@
             [(equal? (vector-ref current-kirby 0) "doctor")
              (draw-drawing canv (doctor-kirby 120) 180 120)]
             [(equal? (vector-ref current-kirby 0) "santa")
-             (draw-drawing canv (final-santa-kirby 120) 96 0)])))))
+             (draw-drawing canv (santa-kirby 120) 96 0)])))))
 
 canv
 
