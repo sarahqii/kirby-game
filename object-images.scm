@@ -715,12 +715,12 @@ canv
         (rectangle (* length 0.15) (* length 1.2) "solid" "blue")
     (beside
       (overlay
-        (circle (* length 0.3) "solid" "white")
-        (circle (* length 0.4) "solid" "blue"))
+        (circle (* length 0.3) "solid" "transparent")
+        (circle (* length 0.4) "outline" "blue"))
       (rectangle (* length 0.2) (* length 0.2) "solid" "blue") 
       (overlay
-        (circle (* length 0.3) "solid" "white")
-        (circle (* length 0.4) "solid" "blue")))
+        (circle (* length 0.3) "solid" "transparent")
+        (circle (* length 0.4) "outline" "blue")))
       (rectangle (* length 0.15) (* length 1.2) "solid" "blue"))))
 
 ;;; (syringe length) -> drawing?
@@ -1074,65 +1074,6 @@ canv
 ;;; Sound Effect |
 ; ----------------
 
-(define Quietest-note
-  (mod (dynamics 10) (note 92 en)))
-
-(define 2nd-quietest-note
-  (mod (dynamics 20) (note 92 en)))
-
-(define 3rd-quietest-note
-  (mod (dynamics 30) (note 92 en)))
-
-(define 4th-quietest-note
-  (mod (dynamics 40) (note 92 en)))
-
-(define 5th-quietest-note
-  (mod (dynamics 50) (note 92 en)))
-
-(define 6th-quietest-note
-  (mod (dynamics 60) (note 92 en)))
-
-(define 7th-quietest-note
-  (mod (dynamics 70) (note 92 en)))
-
-(define 8th-quietest-note
-  (mod (dynamics 80) (note 92 en)))
-
-(define 9th-quietest-note
-  (mod (dynamics 90) (note 92 en)))
-
-(define third-largest-note
-   (mod (dynamics 100) (note 92 en)))
-
-(define second-largest-note
-   (mod (dynamics 110) (note 92 en)))
-
-(define largest-sound
-  (lambda (midi-note)
-  (mod (dynamics 127) (note midi-note qn))))
-
-(define boom-end-sound
-  (mod percussion (largest-sound 39)))
-
-(define click-sound
-  (seq Quietest-note
-       Quietest-note
-       Quietest-note
-       2nd-quietest-note
-       2nd-quietest-note
-       3rd-quietest-note
-       4th-quietest-note
-       5th-quietest-note
-       6th-quietest-note
-       7th-quietest-note
-       8th-quietest-note
-       second-largest-note
-       boom-end-sound
-  )
-)
-  
-
-(display click-sound)
 
 ; -----------
 ;;; The BGM |
