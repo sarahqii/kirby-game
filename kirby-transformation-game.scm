@@ -949,7 +949,7 @@
                       (beside (square 15 "solid" "transparent") 
                               (rotate 345 (lollipop size))))))
 
-;;; (anta-kirby size) -> drawing?
+;;; (santa-kirby size) -> drawing?
 ;;;   size : integer? (non-negative)
 ;;;; Returns a final Santa kirby drawing.
 (define santa-kirby
