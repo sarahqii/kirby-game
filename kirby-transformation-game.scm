@@ -683,25 +683,36 @@
                     (mario-hat (* size 2)) 
                     (basic-kirby size))))
 
-;;; (mario-with-mustache size) -> drawing?
+;;; (mario-kirby size) -> drawing?
 ;;;   size: integer?, non-negative
 ;;; Draws image of mario kirby with hat and mustache.
-(define mario-with-mustache
+(define mario-kirby
   (lambda (size)
     (overlay/offset (- (/ size 1.58730159)) (- (* size 2))
                     (mustache (* size 1.5)) 
                     (mario-wears-hat size))))
 
-;;; (mario-kirby size) -> drawing?
+;;; (mario-kirby-1 size) -> drawing?
 ;;;   size: integer?, non-negative
 ;;; Draws the complete image of Mario Kirby.
-(define mario-kirby
+(define mario-kirby-1
   (lambda (size)
     (overlay/offset (- (* size 3.1)) (- (/ size 1.66667))
                     (mushroom size "red")
                     (overlay/offset (/ size 1.11111111) (- (* size 1.8))
                                     (mushroom (/ size 1.11111111) "green")
-                                    (mario-with-mustache size)))))
+                                    (mario-kirby size)))))
+
+;;; (mario-kirby-2 size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the complete image of Mario Kirby.
+(define mario-kirby-2
+  (lambda (size)
+    (overlay/offset (- (* size 3.1)) (- (* size 1.8))
+                    (mushroom size "red")
+                    (overlay/offset (/ size 1.11111111) (- (/ size 1.2))
+                                    (mushroom (/ size 1.11111111) "green")
+                                    (mario-kirby size)))))
 
 ;; Display to test
 (mario-kirby 120)
@@ -1173,7 +1184,14 @@
                                147
                                114))]
             [(equal? (vector-ref current-kirby 0) "mario")
-             (draw-drawing canv (mario-kirby 120) 73 70)]
+               (begin
+                 (draw-drawing canv basic-background 0 0)
+                 (draw-drawing canv 
+                               (if (odd? (round (* 60 time)))
+                                   (mario-kirby-1 120)
+                                   (mario-kirby-2 120))
+                               50
+                               80))]
             [(equal? (vector-ref current-kirby 0) "doctor")
              (draw-drawing canv (doctor-kirby 120) 180 120)]
             [(equal? (vector-ref current-kirby 0) "santa")
