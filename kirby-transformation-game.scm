@@ -1136,8 +1136,13 @@
           (cond
             [(equal? (vector-ref current-kirby 0) "title")
              (begin
-               (draw-text canv "Kirby Transformation!" 60 280 "solid" "hotpink" "60px comic sans ms") 0 0
-               (draw-text canv "Click on balls to make Kirby appear!" 115 330 "solid" "hotpink" "30px comic sans ms") 0 0)]
+               (draw-text canv "Kirby Transformation!" 60 180 "solid" "hotpink" "60px comic sans ms") 0 0
+               (draw-text canv "Click on balls to make Kirby appear!" 115 230 "solid" "hotpink" "30px comic sans ms") 0 0
+               (draw-text canv "Instruction Manual" 250 300 "solid" "hotpink" "20px Courier") 0 0
+               (draw-text canv "·Use the mouse to interact with the game." 140 340 "solid" "hotpink" "20px Courier") 0 0
+               (draw-text canv "·Click on a power ball to transform Kirby." 140 370 "solid" "hotpink" "20px Courier") 0 0
+               (draw-text canv "·Click on the pink power ball to return." 140 400 "solid" "hotpink" "20px Courier") 0 0
+               (draw-text canv "·Enjoy and have fun!" 140 430 "solid" "hotpink" "20px Courier") 0 0)]
             [(equal? (vector-ref current-kirby 0) "basic")
              (begin
                (draw-drawing canv basic-background 0 0)
