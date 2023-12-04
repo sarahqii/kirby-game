@@ -1089,38 +1089,21 @@
                                                                   (medical-ball 40)
                                                                   (christmas-ball 40))))))
 
-;;; An animation for basic kirby bouncing his feet with the background and 4 balls.
-(ignore
-  (animate-with
-    (lambda (time)
-      (begin
-        (draw-drawing canv basic-background 0 0)
-        (draw-drawing canv
-                      (if (odd? (round (* 60 time)))
-                          (basic-kirby 120)
-                          (basic-kirby-offset 120))
-                      390
-                      180)))))
-canv
 
 (define basic-background
   (overlay/offset -700 -40 bg-balls bg))
         
-; ---------------------
-;;; Text Introduction |
-; ---------------------
+; ----------------
+;;; Sound Effect |
+; ----------------
 
-;;; An introduction title of the game.        
-;; (ignore
-;;   (animate-with
-;;     (lambda (time)
-;;       (begin
-;;         (draw-text canv "Kirby Transformation!" 270 40 "solid" "hotpink" "40px comic sans ms")
-;;                       0
-;;                       0))))
+(define largest-sound
+  (lambda (midi-note)
+  (mod (dynamics 127) (note midi-note qn))))
 
-;; canv
-
+(define boom-end-sound
+  (mod percussion (largest-sound 39)))
+        
 ; --------------------
 ;;; Ball Click Effect|
 ; --------------------
@@ -1156,8 +1139,6 @@ canv
           [else
            (vector-set! current-kirby 0 (vector-ref current-kirby 0))])))))
 
-;;; A title and an instruction manual for the game.       
-
 (ignore
   (animate-with
     (lambda (time)
@@ -1166,12 +1147,8 @@ canv
           (cond
             [(equal? (vector-ref current-kirby 0) "title")
              (begin
-               (draw-text canv "Kirby Transformation!" 100 300 "solid" "hotpink" "50px comic sans ms")
-                          0
-                          0
-               (draw-text canv "Click on balls to make Kirby appear!" 110 350 "solid" "hotpink" "30px comic sans ms")
-                          0
-                          0)]
+               (draw-text canv "Kirby Transformation!" 60 280 "solid" "hotpink" "60px comic sans ms") 0 0
+               (draw-text canv "Click on balls to make Kirby appear!" 115 330 "solid" "hotpink" "30px comic sans ms") 0 0)]
             [(equal? (vector-ref current-kirby 0) "basic")
              (begin
                (draw-drawing canv basic-background 0 0)
@@ -1196,36 +1173,8 @@ canv
              (draw-drawing canv (doctor-kirby 120) 180 120)]
             [(equal? (vector-ref current-kirby 0) "santa")
              (draw-drawing canv (final-santa-kirby 120) 96 0)])))))
-        (draw-text 
-          canv "Kirby Transformation!" 0 70 "solid" "hotpink" "70px comic sans ms")
-        (draw-text
-          canv "Instruction Manual" 0 190 "solid" "black" "24px Courier")
-        (draw-text
-          canv "·Use the mouse to interact" 0 240 "solid" "black" "18px Courier")
-        (draw-text
-          canv "with the game." 15 260 "solid" "black" "18px Courier")
-        (draw-text
-          canv "·Click on a power ball to" 0 290 "solid" "black" "18px Courier")
-        (draw-text
-          canv "transform Kirby into the" 15 310 "solid" "black" "18px Courier")
-        (draw-text
-          canv "related dressed-up version." 15 330 "solid" "black" "18px Courier")
-        (draw-text
-          canv "·To return to the original" 0 360 "solid" "black" "18px Courier")
-        (draw-text
-          canv "Kirby,click on the pink power" 15 380 "solid" "black" "18px Courier")
-        (draw-text
-          canv "ball." 15 400 "solid" "black" "18px Courier")
-        (draw-text
-          canv "·Have fun!" 0 430 "solid" "black" "18px Courier")
-                      0
-                      0))))
+
 canv
-
-; ----------------
-;;; Sound Effect |
-; ----------------
-
 
 ; -----------
 ;;; The BGM |
@@ -1332,8 +1281,8 @@ canv
        underlying-bgm-3
        underlying-bgm-1))
 
-;;; The full bgm, the main and underlying bgm combined, repeated twice.
-(repeat 2
+;;; The full bgm, the main and underlying bgm combined, repeated 20 times.
+(repeat 20
   (mod (tempo qn 180) 
      (par (mod (dynamics 80) (mod (instrument 60) main-bgm))
           (mod (dynamics 10) (mod (instrument 57) underlying-bgm)))))
