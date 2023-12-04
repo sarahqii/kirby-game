@@ -969,6 +969,43 @@
 
 ; (fina-santa-kirby-with-background 100)
 
+;;; (diamond length color) -> drawing?
+;;;   length: integer?, non-negative
+;;;   color: string?
+;;; Draws a rotated 45 degrees square to make a diamond. Adapted from 
+;;; basic-datatypes.scm (mini-project 2)
+(define diamond
+  (lambda (length color) 
+    (path length                           ; horizontal image size
+          length                           ; vertical image size
+          (list (pair (/ length 2) 0)      ; top point
+                (pair length (/ length 2)) ; far right point
+                (pair (/ length 2) length) ; bottom point
+                (pair 0 (/ length 2))      ; far left point
+                (pair (/ length 2) 0))     ; top point (need to return)
+          "outline"                        ; fill style
+          color)))                         ; color
+
+;;; (my-fractal length color n) -> drawing?
+;;;   length: integer?, non-negative
+;;;   color: string?
+;;;   n: integer?, non-negative
+;;; Draws fractal kolam with the given visual properties.
+(define my-fractal
+  (lambda (length color n)
+    (match n
+      [0 null]
+      [1 (diamond length color)]
+      [_ (let* ([make-diamond (my-fractal (/ length 3) color (- n 1))]
+                [space (square (/ length 3) "solid" "white")]
+                [top-bot-row (beside space make-diamond space)]
+                [mid-row (beside make-diamond make-diamond make-diamond)])
+           (above top-bot-row 
+                  mid-row 
+                  top-bot-row))])))
+
+(my-fractal 80 "lightblue" 4)
+
 ;; Display to test
 (santa-kirby 120)
 
