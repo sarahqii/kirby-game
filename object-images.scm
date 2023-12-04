@@ -976,7 +976,22 @@ canv
                       180
                       180)))))
 canv
-        
+
+; ---------------------
+;;; Text Introduction |
+; ---------------------
+
+;;; An introduction title of the game.        
+(ignore
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-text canv "Kirby Transformation!" 270 40 "solid" "hotpink" "40px comic sans ms")
+                      0
+                      0))))
+
+canv
+
 ; ---------------------
 ;;; Ball Click Effect |
 ; ---------------------
