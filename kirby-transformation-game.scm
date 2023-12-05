@@ -1289,7 +1289,7 @@
                  (draw-drawing canv
                                (if (odd? (round (* 60 time)))
                                    (santa-kirby-snowflake-up 120)
-                                   (santa-kirby-snowflake-middle 120))
+                                   (santa-kirby-snowflake-down 120))
                                100
                                60))])))))
 
