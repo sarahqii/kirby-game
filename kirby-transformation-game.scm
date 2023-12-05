@@ -1022,15 +1022,18 @@
                     (snowflake size)
                     (santa-kirby size))))
 
-;;; (santa-kirby-snowflake-middle size) -> drawing?
-;;;  size: integer? (non-negative)
-;;; Returns an image when snowflake is in the midst of falling. 
-(define santa-kirby-snowflake-middle
-  (lambda (size)
-    (overlay/offset (* -2.85 size) (* -1.75 size) 
-                    (snowflake size)
-                    (santa-kirby size))))
+; ;;; (santa-kirby-snowflake-middle size) -> drawing?
+; ;;;  size: integer? (non-negative)
+; ;;; Returns an image when snowflake is in the midst of falling. 
+; (define santa-kirby-snowflake-middle
+;   (lambda (size)
+;     (overlay/offset (* -2.85 size) (* -1.75 size) 
+;                     (snowflake size)
+;                     (santa-kirby size))))
 
+;;; (santa-kirby-snowflake-down size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Returns an image when snowflake falls down.
 (define santa-kirby-snowflake-down
   (lambda (size)
     (overlay/offset (* -2.85 size) (* -3.5 size) 
