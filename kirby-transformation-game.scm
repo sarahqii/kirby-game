@@ -972,10 +972,10 @@
                      (santa-kirby-with-lollipop size))))
 
 ;;; (diamond length color) -> drawing?
-;;;   length: integer?, non-negative
+;;;   length: integer? (non-negative)
 ;;;   color: string?
 ;;; Draws a rotated 45 degrees square to make a diamond. Adapted from 
-;;; basic-datatypes.scm (mini-project 2)
+;;; mini-project 5.
 (define diamond
   (lambda (length color) 
     (path length                           ; horizontal image size
@@ -988,26 +988,78 @@
           "outline"                        ; fill style
           color)))                         ; color
 
-;;; (my-fractal length color n) -> drawing?
-;;;   length: integer?, non-negative
+;;; (base-snowflake length color n) -> drawing?
+;;;   length: integer? (non-negative)
 ;;;   color: string?
-;;;   n: integer?, non-negative
-;;; Draws fractal kolam with the given visual properties.
-(define my-fractal
+;;;   n: integer? (non-negative)
+;;; Draws fractal kolam with the given visual properties. Adapted from mini-project 5.
+(define base-snowflake
   (lambda (length color n)
     (match n
       [0 null]
       [1 (diamond length color)]
-      [_ (let* ([make-diamond (my-fractal (/ length 3) color (- n 1))]
-                [space (square (/ length 3) "solid" "white")]
+      [_ (let* ([make-diamond (base-snowflake (/ length 3) color (- n 1))]
+                [space (square (/ length 3) "solid" "transparent")]
                 [top-bot-row (beside space make-diamond space)]
                 [mid-row (beside make-diamond make-diamond make-diamond)])
            (above top-bot-row 
                   mid-row 
                   top-bot-row))])))
 
-;(my-fractal 80 "lightblue" 4)
+;;; (snowflake size) -> drawing?
+;;;  size: integer? (non-negative)
+;;; Returns a complete snowflake image.
+(define snowflake
+  (lambda (size)
+  (base-snowflake (* 0.80 size) "lightblue" 4)))
 
+;;; (santa-kirby-snowflake-up size) -> drawing?
+;;;  size: integer? (non-negative)
+;;; Returns an image when snowflake is at the top. Just began falling.
+(define santa-kirby-snowflake-up
+  (lambda (size)
+    (overlay/offset (* -2.85 size) (* -0.2 size) 
+                    (snowflake size)
+                    (santa-kirby size) 
+                    )))
+
+;;; (santa-kirby-snowflake-middle size) -> drawing?
+;;;  size: integer? (non-negative)
+;;; Returns an image when snowflake is in the midst of falling. 
+(define santa-kirby-snowflake-middle
+  (lambda (size)
+    (overlay/offset (* -2.85 size) (* -1.75 size) 
+                    (snowflake size)
+                    (santa-kirby size) 
+      )))
+
+(define santa-kirby-snowflake-down
+  (lambda (size)
+    (overlay/offset (* -2.85 size) (* -3.5 size) 
+                    (snowflake size)
+                    (santa-kirby size) 
+                    )))
+
+
+;;; An animation of santa kirby with snowflake moving up and down.
+  (animate-with
+    (lambda (time)
+      (begin
+        (draw-rectangle canv 0 0 2000 2000 "solid" "white")
+        (draw-drawing canv
+                      (let*
+                        (
+                          [roundedT (round (* 0.002 time))]
+                          [modT (modulo roundedT 3)])
+                        (cond 
+                          [(equal? 0 modT) (santa-kirby-snowflake-up 100)]
+                          [(equal? 1 modT) (santa-kirby-snowflake-middle 100)]
+                          [(equal? 2 modT) (santa-kirby-snowflake-down 100)]))
+                      0
+                      0))))
+
+ canv
+        
 ;; Display to test
 ;(santa-kirby 120)
 
