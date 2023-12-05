@@ -811,7 +811,7 @@
 ;;; Draws the complete doctor kirby.
 (define doctor-kirby
   (lambda (size)
-    (overlay/offset (- (* size 0.005)) (* size 0.5)
+    (overlay/offset (- (* size 0.05)) (* size 0.5)
       (doctor-kirby-with-glasses size) (syringe (* size 0.5)))))
 
 ;;; (doctor-kirby-with-water-drops size) -> drawing?
