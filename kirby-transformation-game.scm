@@ -1,6 +1,9 @@
-; images.scm
+; kirby-transformation-game.scm
 
-;;; This file includes all the static images needed for the game.
+;;; CSC-151-02 (Fall 2023)
+;;; Final Project: Kirby Transformation
+;;; Authors: Khanh Do, Paul Lim, Seojin Peoun, Sarah Qi
+;;; Acknowledgement: We would like to acknowledge whoever created Kirby because it is so cute!
 
 (import image)
 (import lab)
