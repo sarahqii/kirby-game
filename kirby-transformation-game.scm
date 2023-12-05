@@ -1051,14 +1051,14 @@
                     (snowflake size)
                     (santa-kirby size))))
 
-; ;;; (santa-kirby-snowflake-middle size) -> drawing?
-; ;;;  size: integer? (non-negative)
-; ;;; Returns an image when snowflake is in the midst of falling. 
-; (define santa-kirby-snowflake-middle
-;   (lambda (size)
-;     (overlay/offset (* -2.85 size) (* -1.75 size) 
-;                     (snowflake size)
-;                     (santa-kirby size))))
+;;; (santa-kirby-snowflake-middle size) -> drawing?
+;;;  size: integer? (non-negative)
+;;; Returns an image when snowflake is in the midst of falling. 
+(define santa-kirby-snowflake-middle
+  (lambda (size)
+    (overlay/offset (* -2.85 size) (* -1.75 size) 
+                    (snowflake size)
+                    (santa-kirby size))))
 
 ;;; (santa-kirby-snowflake-down size) -> drawing?
 ;;;   size: integer?, non-negative
@@ -1257,41 +1257,44 @@
                              180
                              180))]
             [(equal? (vector-ref current-kirby 0) "tennis")
-               (begin
-                 (draw-drawing canv basic-background 0 0)
-                 (draw-drawing canv
-                               (if (odd? (round (* 60 time)))
-                                   (tennis-kirby-ball-down 120)
-                                   (tennis-kirby-ball-up 120))
-                               147
-                               114))]
+             (begin
+               (draw-drawing canv basic-background 0 0)
+               (draw-drawing canv
+                             (if (odd? (round (* 60 time)))
+                                 (tennis-kirby-ball-down 120)
+                                 (tennis-kirby-ball-up 120))
+                             147
+                             114))]
             [(equal? (vector-ref current-kirby 0) "mario")
-               (begin
-                 (draw-drawing canv basic-background 0 0)
-                 (draw-drawing canv 
-                               (if (odd? (round (* 60 time)))
-                                   (mario-kirby-1 120)
-                                   (mario-kirby-2 120))
-                               50
-                               80))]
+             (begin
+               (draw-drawing canv basic-background 0 0)
+               (draw-drawing canv 
+                             (if (odd? (round (* 60 time)))
+                                 (mario-kirby-1 120)
+                                 (mario-kirby-2 120))
+                             50
+                             80))]
             [(equal? (vector-ref current-kirby 0) "doctor")
-               (begin
-                 (draw-drawing canv basic-background 0 0)
-                 (draw-drawing canv
-                               (if (odd? (round (* 60 time)))
-                                   (doctor-kirby 120)
-                                   (doctor-kirby-with-water-drops 120))
-                                 180
-                                 120))]
+             (begin
+               (draw-drawing canv basic-background 0 0)
+               (draw-drawing canv
+                             (if (odd? (round (* 60 time)))
+                                 (doctor-kirby 120)
+                                 (doctor-kirby-with-water-drops 120))
+                             180
+                             120))]
             [(equal? (vector-ref current-kirby 0) "santa")
-               (begin
-                 (draw-drawing canv basic-background 0 0)
-                 (draw-drawing canv
-                               (if (odd? (round (* 60 time)))
-                                   (santa-kirby-snowflake-up 120)
-                                   (santa-kirby-snowflake-down 120))
-                               100
-                               60))])))))
+             (begin
+               (draw-drawing canv basic-background 0 0)
+               (draw-drawing canv
+                             (let* ([roundedT (round (* 0.002 time))]
+                                    [modT (modulo roundedT 3)])
+                               (cond 
+                                 [(equal? 0 modT) (santa-kirby-snowflake-up 120)]
+                                 [(equal? 1 modT) (santa-kirby-snowflake-middle 120)]
+                                 [(equal? 2 modT) (santa-kirby-snowflake-down 120)]))
+                             100
+                             60))])))))
 
 ;; The canvas.        
 canv
