@@ -769,6 +769,27 @@
          (rectangle (* length 0.25) (* length 0.375) "solid" "black")
          (ellipse (* length 0.5) (* length 0.25) "solid" "black")))))
 
+;;; (water-drops length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws the water drops of the syringe.
+(define water-drops
+  (lambda (length)
+    (above
+      (beside (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue")
+              (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue")
+              (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue"))
+      (beside (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue") 
+              (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue"))
+      (ellipse (* length 0.25) (* length 0.75) "solid" "lightblue"))))
+
+;;; (syringe-with-water-drops length) -> drawing?
+;;;   length: integer?, non-negative
+;;; Draws syringe with water drops.
+(define syringe-with-water-drops
+  (lambda (length)
+    (above
+      (water-drops (* length 0.2)) (syringe length))))
+
 ;;; (doctor-kirby-with-hat size) -> drawing?
 ;;;   size: integer?, non-negative
 ;;; Draws doctor kirby with hat.
@@ -792,6 +813,14 @@
   (lambda (size)
     (overlay/offset (- (* size 0.005)) (* size 0.5)
       (doctor-kirby-with-glasses size) (syringe (* size 0.5)))))
+
+;;; (doctor-kirby-with-water-drops size) -> drawing?
+;;;   size: integer?, non-negative
+;;; Draws the complete doctor kirby wtih water drops.
+(define doctor-kirby-with-water-drops
+  (lambda (size)
+    (overlay/offset (- (* size 0.05)) (* size 0.5)
+      (doctor-kirby-with-glasses size) (syringe-with-water-drops (* size 0.5)))))
 
 ; Display to test
 ;(doctor-kirby 120)
@@ -1246,7 +1275,14 @@
                                50
                                80))]
             [(equal? (vector-ref current-kirby 0) "doctor")
-             (draw-drawing canv (doctor-kirby 120) 180 120)]
+               (begin
+                 (draw-drawing canv basic-background 0 0)
+                 (draw-drawing canv
+                               (if (odd? (round (* 60 time)))
+                                   (doctor-kirby 120)
+                                   (doctor-kirby-with-water-drops 120))
+                                 180
+                                 120))]
             [(equal? (vector-ref current-kirby 0) "santa")
                (begin
                  (draw-drawing canv basic-background 0 0)
