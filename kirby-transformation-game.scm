@@ -1020,8 +1020,7 @@
   (lambda (size)
     (overlay/offset (* -2.85 size) (* -0.2 size) 
                     (snowflake size)
-                    (santa-kirby size) 
-                    )))
+                    (santa-kirby size))))
 
 ;;; (santa-kirby-snowflake-middle size) -> drawing?
 ;;;  size: integer? (non-negative)
@@ -1030,35 +1029,32 @@
   (lambda (size)
     (overlay/offset (* -2.85 size) (* -1.75 size) 
                     (snowflake size)
-                    (santa-kirby size) 
-      )))
+                    (santa-kirby size))))
 
 (define santa-kirby-snowflake-down
   (lambda (size)
     (overlay/offset (* -2.85 size) (* -3.5 size) 
                     (snowflake size)
-                    (santa-kirby size) 
-                    )))
+                    (santa-kirby size))))
 
+; ;;; An animation of santa kirby with snowflake moving up and down.
+;   (animate-with
+;     (lambda (time)
+;       (begin
+;         (draw-rectangle canv 0 0 2000 2000 "solid" "white")
+;         (draw-drawing canv
+;                       (let*
+;                         (
+;                           [roundedT (round (* 0.002 time))]
+;                           [modT (modulo roundedT 3)])
+;                         (cond 
+;                           [(equal? 0 modT) (santa-kirby-snowflake-up 100)]
+;                           [(equal? 1 modT) (santa-kirby-snowflake-middle 100)]
+;                           [(equal? 2 modT) (santa-kirby-snowflake-down 100)]))
+;                       0
+;                       0))))
 
-;;; An animation of santa kirby with snowflake moving up and down.
-  (animate-with
-    (lambda (time)
-      (begin
-        (draw-rectangle canv 0 0 2000 2000 "solid" "white")
-        (draw-drawing canv
-                      (let*
-                        (
-                          [roundedT (round (* 0.002 time))]
-                          [modT (modulo roundedT 3)])
-                        (cond 
-                          [(equal? 0 modT) (santa-kirby-snowflake-up 100)]
-                          [(equal? 1 modT) (santa-kirby-snowflake-middle 100)]
-                          [(equal? 2 modT) (santa-kirby-snowflake-down 100)]))
-                      0
-                      0))))
-
- canv
+;  canv
         
 ;; Display to test
 ;(santa-kirby 120)
@@ -1249,7 +1245,14 @@
             [(equal? (vector-ref current-kirby 0) "doctor")
              (draw-drawing canv (doctor-kirby 120) 180 120)]
             [(equal? (vector-ref current-kirby 0) "santa")
-             (draw-drawing canv (santa-kirby 120) 96 0)])))))
+               (begin
+                 (draw-drawing canv basic-background 0 0)
+                 (draw-drawing canv
+                               (if (odd? (round (* 60 time)))
+                                   (santa-kirby-snowflake-up 120)
+                                   (santa-kirby-snowflake-middle 120))
+                               100
+                               60))])))))
 
 ;; The canvas.        
 canv
