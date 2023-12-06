@@ -4,6 +4,7 @@
 ;;; Final Project: Kirby Transformation
 ;;; Authors: Khanh Do, Paul Lim, Seojin Peoun, Sarah Qi
 ;;; Acknowledgement: We would like to acknowledge whoever created Kirby because it is so cute!
+;;; GitHub repo: github.com/khanhdo05/kirby-game 
 
 (import image)
 (import lab)
