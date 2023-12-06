@@ -57,6 +57,7 @@
                 (pair (/ length 2) (* length 0.75)) ; 8
                 (pair (* length (/ 1 8)) length) ; 9
                 (pair (* length 0.25) (* length (/ 5 8))) ;10
+                (pair 0 (* length (/ 3 8)))
           )
           fill
           color)))
