@@ -10,7 +10,6 @@
 (import lab)
 (import canvas)
 (import music)
-(import html)
 
 (define canv (make-canvas 1000 600))
 
