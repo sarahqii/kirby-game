@@ -845,7 +845,7 @@
                             (pair (* size 1.8) (* size 0.575))   ; 4th point
                             (pair (* size 1.96) (* size 0.96))   ; 5th point 
                             (pair (* size 1.73) (* size 0.925))  ; 6th point
-                            (pair (* size 1.15) (* size 1.4))    ;7th point
+                            (pair (* size 1.15) (* size 1.4))    ; 7th point
                             (pair (* size 0.575) (* size 0.925)) ; 8th pint
                             (pair (* size 0.345)  (* size 0.96)) ; 9 th pint
                             (pair (* size 0.5) (* size 0.575))   ; 10th pint
@@ -1071,25 +1071,6 @@
     (overlay/offset (* -2.85 size) (* -3.5 size) 
                     (snowflake size)
                     (santa-kirby size))))
-
-; ;;; An animation of santa kirby with snowflake moving up and down.
-;   (animate-with
-;     (lambda (time)
-;       (begin
-;         (draw-rectangle canv 0 0 2000 2000 "solid" "white")
-;         (draw-drawing canv
-;                       (let*
-;                         (
-;                           [roundedT (round (* 0.002 time))]
-;                           [modT (modulo roundedT 3)])
-;                         (cond 
-;                           [(equal? 0 modT) (santa-kirby-snowflake-up 100)]
-;                           [(equal? 1 modT) (santa-kirby-snowflake-middle 100)]
-;                           [(equal? 2 modT) (santa-kirby-snowflake-down 100)]))
-;                       0
-;                       0))))
-
-;  canv
         
 ;; Display to test
 ;(santa-kirby 120)
